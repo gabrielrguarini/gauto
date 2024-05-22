@@ -21,7 +21,7 @@ export const Loginschema = z.object({
     .min(5),
 });
 
-export async function LoginUser(formData: FormData) {
+export async function LogaUsuario(formData: FormData) {
   "use server";
   const formDataValidado = Loginschema.safeParse({
     email: formData.get("email"),
@@ -34,7 +34,7 @@ export async function LoginUser(formData: FormData) {
     };
   }
   await signIn("credentials", {
-    ...formDataValidado.data, // Dados de autenticação do usuário
+    ...formDataValidado.data,
     redirect: false,
     callbackUrl: "/",
   });
