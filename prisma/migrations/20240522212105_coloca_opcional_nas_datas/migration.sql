@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "dataDeCriacao" DROP NOT NULL,
+ALTER COLUMN "dataDeAtualizacao" DROP NOT NULL,
+ALTER COLUMN "dataDeAtualizacao" SET DEFAULT CURRENT_TIMESTAMP;
