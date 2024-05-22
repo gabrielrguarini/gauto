@@ -1,6 +1,7 @@
 import { signIn } from "@/auth";
 import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
 
@@ -32,5 +33,10 @@ export async function LoginUser(formData: FormData) {
       errors: formDataValidado.error.flatten().fieldErrors,
     };
   }
-  await signIn("credentials", formDataValidado.data);
+  await signIn("credentials", {
+    ...formDataValidado.data, // Dados de autenticação do usuário
+    redirect: false,
+    callbackUrl: "/",
+  });
+  redirect("/");
 }
