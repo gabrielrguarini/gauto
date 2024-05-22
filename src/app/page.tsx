@@ -1,17 +1,11 @@
 "use server";
 import { auth } from "@/auth";
 import SingOutButton from "@/components/ui/singInButton";
+import { redirect } from "next/navigation";
 export default async function Dashboard() {
   const sessao = await auth();
   if (!sessao) {
-    return (
-      <div>
-        <div>Usuário não autenticado</div>
-        <button className="border-solid border-2 border-slate-600 py-1 px-4 rounded-md">
-          Entrar
-        </button>
-      </div>
-    );
+    redirect("/login");
   }
   return (
     <div>
