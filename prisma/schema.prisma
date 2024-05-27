@@ -8,9 +8,40 @@ datasource db {
 }
 
 model User {
-  id                Int       @id @default(autoincrement())
-  email             String    @unique
+  id                Int      @id @default(autoincrement())
+  email             String   @unique
   senha             String
-  dataDeCriacao     DateTime? @default(now())
-  dataDeAtualizacao DateTime? @default(now()) @updatedAt
+  dataDeCriacao     DateTime @default(now())
+  dataDeAtualizacao DateTime @default(now()) @updatedAt
+}
+
+model Cliente {
+  id                Int      @id @default(autoincrement())
+  nome              String   @unique
+  endereco          String?
+  cidade            String
+  telefone          String?
+  dataDeCriacao     DateTime @default(now())
+  dataDeAtualizacao DateTime @default(now()) @updatedAt
+
+  notas Nota[]
+}
+
+model Produto {
+  id            Int    @id @default(autoincrement())
+  nome          String
+  quantidade    Int
+  valorDeVenda  Float
+  valorDeCompra Float
+
+  nota   Nota? @relation(fields: [notaId], references: [id])
+  notaId Int?
+}
+
+model Nota {
+  id        Int       @id @default(autoincrement())
+  numero    Int
+  produtos  Produto[]
+  cliente   Cliente   @relation(fields: [clienteId], references: [id])
+  clienteId Int
 }
