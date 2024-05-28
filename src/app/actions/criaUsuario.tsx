@@ -1,3 +1,4 @@
+"use server";
 const bcrypt = require("bcryptjs");
 
 import { z } from "zod";
@@ -30,7 +31,6 @@ export const CreateUserschema = z.object({
 });
 
 export async function CriaUsuario(formData: FormData) {
-  "use server";
   const formDataValidado = CreateUserschema.safeParse({
     email: formData.get("email"),
     senha: formData.get("senha"),

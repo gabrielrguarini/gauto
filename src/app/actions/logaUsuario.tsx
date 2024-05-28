@@ -1,9 +1,6 @@
 import { signIn } from "@/auth";
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
-
-const prisma = new PrismaClient();
 
 export const Loginschema = z.object({
   email: z
