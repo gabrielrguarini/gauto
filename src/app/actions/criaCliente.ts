@@ -1,6 +1,7 @@
 "use server";
 import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const prisma = new PrismaClient();
 
@@ -33,6 +34,7 @@ export default async function criaCliente(prevState: any, formData: FormData) {
   });
   if (!formDataValidade.success) {
     console.log(formDataValidade.error.flatten().fieldErrors);
+    revalidatePath("/");
     return {
       errors: "Formulário inválido",
     };
@@ -45,6 +47,8 @@ export default async function criaCliente(prevState: any, formData: FormData) {
     });
     if (existeCliente) {
       console.log("Cliente já cadastrado");
+      revalidatePath("/");
+
       return {
         message: "Cliente já cadastrado",
       };
