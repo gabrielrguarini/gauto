@@ -28,11 +28,12 @@ model Cliente {
 }
 
 model Produto {
-  id            Int    @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   nome          String
   quantidade    Int
   valorDeVenda  Float
   valorDeCompra Float
+  status        String?
 
   nota   Nota? @relation(fields: [notaId], references: [id])
   notaId Int?

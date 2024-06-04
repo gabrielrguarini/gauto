@@ -10,10 +10,10 @@ export default async function Dashboard() {
     redirect("/login");
   }
   return (
-    <div>
+    <main>
       <CriarClienteDialog />
       <CriarNotaDialog />
       <SingOutButton />
-    </div>
+    </main>
   );
 }

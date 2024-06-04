@@ -1,17 +1,20 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-export async function BuscaClientes() {
+export async function BuscaProdutos() {
   const prisma = new PrismaClient();
   try {
-    const todosClientes = await prisma.cliente.findMany({
+    const todosProdutos = await prisma.produto.findMany({
+      include: {
+        nota: true,
+      },
       orderBy: {
         nome: "asc",
       },
     });
-    return todosClientes;
+    return todosProdutos;
   } catch (error) {
     console.log(error);
-    throw new Error("Erro ao buscar clientes");
+    throw new Error("Erro ao buscar produtos");
   } finally {
     await prisma.$disconnect();
   }

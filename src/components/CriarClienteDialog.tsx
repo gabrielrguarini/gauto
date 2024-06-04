@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -10,13 +9,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import criaCliente from "@/app/actions/criaCliente";
 import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 const initialState = {
   message: "",
@@ -24,38 +22,21 @@ const initialState = {
 
 export default function CriarClienteDialog() {
   const [state, formAction] = useFormState(criaCliente, initialState);
-  const [alertState, setAlertState] = useState(true);
-  const handleClick = () => {
-    if (state?.errors || state?.message) {
-      setAlertState(true);
-    }
-    const timer = setTimeout(() => {
-      setAlertState(false);
-      state.message = undefined;
-      state.errors = undefined;
-    }, 3000);
-    return () => clearTimeout(timer);
-  };
+
+  if (state?.errors) {
+    toast.error(state.errors, {
+      closeButton: true,
+    });
+  }
+  if (state?.message) {
+    toast(state.message, {
+      closeButton: true,
+      className: "justify-center w-64",
+    });
+  }
+
   return (
     <div className="relative">
-      {state?.message && alertState && (
-        <Alert className="fixed bottom-4 left-4 max-w-xs">
-          <Terminal className="h-4 w-4" />
-          <AlertTitle>Mensagem</AlertTitle>
-          <AlertDescription>{state.message}</AlertDescription>
-        </Alert>
-      )}
-      {state?.errors && alertState && (
-        <Alert
-          className="fixed bottom-4 left-4 max-w-xs"
-          variant={"destructive"}
-        >
-          <Terminal className="h-4 w-4" />
-          <AlertTitle>Mensagem</AlertTitle>
-          <AlertDescription>{state.errors}</AlertDescription>
-        </Alert>
-      )}
-
       <Dialog>
         <DialogTrigger asChild>
           <Button>Criar cliente</Button>
@@ -68,8 +49,8 @@ export default function CriarClienteDialog() {
             </DialogDescription>
           </DialogHeader>
           <form action={formAction} className="flex flex-col mt-4 gap-2">
-            <Input placeholder="Nome*" name="nome" required />
-            <Input placeholder="Cidade*" name="cidade" required />
+            <Input placeholder="Nome*" name="nome" />
+            <Input placeholder="Cidade*" name="cidade" />
             <Input placeholder="Endereço" name="endereco" />
             <Input placeholder="Telefone" name="telefone" />
             <DialogFooter>
@@ -79,9 +60,7 @@ export default function CriarClienteDialog() {
                 </Button>
               </DialogClose>
               <DialogClose asChild>
-                <Button type="submit" onClick={handleClick}>
-                  Salvar
-                </Button>
+                <Button type="submit">Salvar</Button>
               </DialogClose>
             </DialogFooter>
           </form>

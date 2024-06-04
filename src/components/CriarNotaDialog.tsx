@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogClose,
@@ -8,60 +9,95 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import { CriaNota } from "@/app/actions/criaNota";
+import ListaProdutos, { Produto } from "./ui/listaProdutos";
+import { useEffect, useState } from "react";
+import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "./ui/select";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+export interface todosClientesInterface {
+  id: number;
+  nome: string;
+  endereco?: string | null;
+  cidade: string;
+  telefone?: string | null;
+  dataDeCriacao?: Date;
+  dataDeAtualizacao?: Date;
+}
 
-import { CriaNota } from "@/app/actions/criaNota";
-import { BuscaClientes } from "@/app/actions/buscaClientes";
-import ListaProdutos from "./ui/listaProdutos";
-
-export default async function CriarClienteDialog() {
-  const todosClientes = await BuscaClientes();
+export default function CriarClienteDialog() {
+  useEffect(() => {
+    async function fetchClientes() {
+      const todoClientes = await BuscaClientes();
+      setTodosClientes(todoClientes);
+    }
+    fetchClientes();
+  }, []);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [todosClientes, setTodosClientes] =
+    useState<todosClientesInterface[]>();
+  const criaNotaComProdutos = CriaNota.bind(null, produtos);
+  if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
-      <Dialog>
+      <Dialog modal>
         <DialogTrigger asChild>
           <Button>Criar Nota</Button>
         </DialogTrigger>
-        <DialogContent className="w-full h-full">
+        <DialogContent className="w-full h-full content-start">
           <DialogHeader>
             <DialogTitle>Criar Nota</DialogTitle>
             <DialogDescription>
               Preencha os dados para criar uma nova nota.
             </DialogDescription>
           </DialogHeader>
-          <form action={CriaNota} className="flex flex-col mt-4 gap-2">
+          <form
+            action={criaNotaComProdutos}
+            className="flex flex-col mt-4 gap-2"
+          >
             <Input placeholder="Numero*" name="numero" required />
-            <Select>
-              <SelectTrigger className="">
+            <Select name="cliente">
+              <SelectTrigger>
                 <SelectValue placeholder="Cliente*" />
               </SelectTrigger>
               <SelectContent>
-                {todosClientes.map((cliente) => (
+                {todosClientes?.map((cliente) => (
                   <SelectItem key={cliente.id} value={`${cliente.id}`}>
                     {cliente.nome}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <ListaProdutos />
-            <DialogFooter>
+            <ListaProdutos produtos={produtos} setProdutos={setProdutos} />
+            <DialogFooter className="self-end">
+              <Button
+                variant={"destructive"}
+                type="button"
+                onClick={() => setProdutos([])}
+              >
+                Limpar
+              </Button>
               <DialogClose asChild>
-                <Button variant={"outline"} type="button">
-                  Cancelar
+                <Button
+                  variant={"outline"}
+                  type="button"
+                  onClick={() => setProdutos([])}
+                >
+                  Sair
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button type="submit">Salvar</Button>
-              </DialogClose>
+              <Button type="submit">Salvar</Button>
+              <DialogClose asChild></DialogClose>
             </DialogFooter>
           </form>
         </DialogContent>
