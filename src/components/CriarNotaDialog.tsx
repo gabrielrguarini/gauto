@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import { CriaNota } from "@/app/actions/criaNota";
 import ListaProdutos, { Produto } from "./ui/listaProdutos";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
   Select,
@@ -39,6 +39,10 @@ export interface todosClientesInterface {
 }
 
 export default function CriarClienteDialog() {
+  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [todosClientes, setTodosClientes] =
+    useState<todosClientesInterface[]>();
+
   useEffect(() => {
     async function fetchClientes() {
       const todoClientes = await BuscaClientes();
@@ -46,9 +50,6 @@ export default function CriarClienteDialog() {
     }
     fetchClientes();
   }, []);
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [todosClientes, setTodosClientes] =
-    useState<todosClientesInterface[]>();
   const initialState = {
     erros: "",
     message: "",
@@ -59,17 +60,20 @@ export default function CriarClienteDialog() {
     initialState
   );
 
-  if (state?.errors) {
-    toast.error(state.errors, {
-      closeButton: true,
-    });
-  }
-  if (state?.message) {
-    toast(state.message, {
-      closeButton: true,
-      className: "justify-center w-64",
-    });
-  }
+  useEffect(() => {
+    if (state.errors) {
+      toast.error(state.errors, {
+        closeButton: true,
+      });
+    }
+    if (state.message) {
+      toast(state.message, {
+        closeButton: true,
+        className: "justify-center w-64",
+      });
+      setProdutos([]);
+    }
+  }, [state]);
   if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
