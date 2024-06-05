@@ -13,8 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import criaCliente from "@/app/actions/criaCliente";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
+import SubmitButton from "./ui/submitButton";
 
 const initialState = {
   message: "",
@@ -60,7 +61,7 @@ export default function CriarClienteDialog() {
                 </Button>
               </DialogClose>
               <DialogClose asChild>
-                <Button type="submit">Salvar</Button>
+                <SubmitButton>Salvar</SubmitButton>
               </DialogClose>
             </DialogFooter>
           </form>

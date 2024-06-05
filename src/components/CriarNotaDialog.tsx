@@ -24,6 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import SubmitButton from "./ui/submitButton";
+import { useFormState } from "react-dom";
+import { toast } from "sonner";
 
 export interface todosClientesInterface {
   id: number;
@@ -46,7 +49,27 @@ export default function CriarClienteDialog() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [todosClientes, setTodosClientes] =
     useState<todosClientesInterface[]>();
-  const criaNotaComProdutos = CriaNota.bind(null, produtos);
+  const initialState = {
+    erros: "",
+    message: "",
+    produtos: [],
+  };
+  const [state, formAction] = useFormState(
+    (state: any, formData: FormData) => CriaNota(state, formData, produtos),
+    initialState
+  );
+
+  if (state?.errors) {
+    toast.error(state.errors, {
+      closeButton: true,
+    });
+  }
+  if (state?.message) {
+    toast(state.message, {
+      closeButton: true,
+      className: "justify-center w-64",
+    });
+  }
   if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
@@ -61,10 +84,7 @@ export default function CriarClienteDialog() {
               Preencha os dados para criar uma nova nota.
             </DialogDescription>
           </DialogHeader>
-          <form
-            action={criaNotaComProdutos}
-            className="flex flex-col mt-4 gap-2"
-          >
+          <form action={formAction} className="flex flex-col mt-4 gap-2">
             <Input placeholder="Numero*" name="numero" required />
             <Select name="cliente">
               <SelectTrigger>
@@ -96,7 +116,7 @@ export default function CriarClienteDialog() {
                   Sair
                 </Button>
               </DialogClose>
-              <Button type="submit">Salvar</Button>
+              <SubmitButton>Salvar</SubmitButton>
               <DialogClose asChild></DialogClose>
             </DialogFooter>
           </form>

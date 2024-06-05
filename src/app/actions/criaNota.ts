@@ -19,7 +19,11 @@ const CriaNotaSchema = z.object({
   cliente: z.coerce.number(),
 });
 
-export async function CriaNota(produtos: Produto[], formData: FormData) {
+export async function CriaNota(
+  prevState: any,
+  formData: FormData,
+  produtos: Produto[]
+) {
   try {
     const dataValidado = CriaNotaSchema.safeParse({
       numero: formData.get("numero"),
@@ -56,13 +60,15 @@ export async function CriaNota(produtos: Produto[], formData: FormData) {
             quantidade: produto.quantidade,
             valorDeVenda: produto.valorDeVenda,
             valorDeCompra: produto.valorDeCompra,
+            status: produto.status,
           })),
         },
       },
     });
 
-    console.log(criaNota);
-    return criaNota;
+    return {
+      message: "Nota criada com sucesso",
+    };
   } catch (error) {
     throw error;
   }
