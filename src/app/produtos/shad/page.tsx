@@ -1,4 +1,4 @@
-import { columns, listaProdutos } from "./columns";
+import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 import { BuscaProdutos } from "@/app/actions/buscaProdutos";
@@ -10,7 +10,7 @@ export default async function Produtos() {
     return <div>Loading...</div>;
   }
   return (
-    <div className="container mx-auto py-10">
+    <div className="container w-full">
       <DataTable columns={columns} data={data} />
     </div>
   );
