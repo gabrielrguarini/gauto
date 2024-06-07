@@ -31,25 +31,25 @@ export const CreateUserschema = z.object({
 });
 
 export async function CriaUsuario(formData: FormData) {
-  const formDataValidado = CreateUserschema.safeParse({
-    email: formData.get("email"),
-    senha: formData.get("senha"),
-    senha2: formData.get("senha2"),
-  });
-  if (!formDataValidado.success) {
-    console.log(
-      formDataValidado.error.flatten().fieldErrors,
-      "Erro nos dados passados: ",
-      formData.get("email"),
-      formData.get("senha"),
-      formData.get("senha2")
-    );
-    return {
-      errors: formDataValidado.error.flatten().fieldErrors,
-    };
-  }
-
   try {
+    const formDataValidado = CreateUserschema.safeParse({
+      email: formData.get("email"),
+      senha: formData.get("senha"),
+      senha2: formData.get("senha2"),
+    });
+    if (!formDataValidado.success) {
+      console.log(
+        formDataValidado.error.flatten().fieldErrors,
+        "Erro nos dados passados: ",
+        formData.get("email"),
+        formData.get("senha"),
+        formData.get("senha2")
+      );
+      return {
+        errors: formDataValidado.error.flatten().fieldErrors,
+      };
+    }
+
     const user = await prisma.user.findUnique({
       where: {
         email: formDataValidado.data.email,
@@ -83,5 +83,8 @@ export async function CriaUsuario(formData: FormData) {
     return;
   } catch (error) {
     console.log(error, "Erro ao criar usuário");
+    throw error;
+  } finally {
+    await prisma.$disconnect();
   }
 }

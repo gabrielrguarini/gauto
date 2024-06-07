@@ -70,6 +70,9 @@ export async function CriaNota(
       message: "Nota criada com sucesso",
     };
   } catch (error) {
+    console.log("Erro ao criar nota: ", error);
     throw error;
+  } finally {
+    await prisma.$disconnect();
   }
 }

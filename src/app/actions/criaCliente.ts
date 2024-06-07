@@ -26,20 +26,20 @@ const CreateClienteSchema = z.object({
 });
 
 export default async function criaCliente(prevState: any, formData: FormData) {
-  const formDataValidade = CreateClienteSchema.safeParse({
-    nome: formData.get("nome"),
-    cidade: formData.get("cidade"),
-    endereco: formData.get("endereco"),
-    telefone: formData.get("telefone"),
-  });
-  if (!formDataValidade.success) {
-    console.log(formDataValidade.error.flatten().fieldErrors);
-    revalidatePath("/");
-    return {
-      errors: "Formulário inválido",
-    };
-  }
   try {
+    const formDataValidade = CreateClienteSchema.safeParse({
+      nome: formData.get("nome"),
+      cidade: formData.get("cidade"),
+      endereco: formData.get("endereco"),
+      telefone: formData.get("telefone"),
+    });
+    if (!formDataValidade.success) {
+      console.log(formDataValidade.error.flatten().fieldErrors);
+      revalidatePath("/");
+      return {
+        errors: "Formulário inválido",
+      };
+    }
     const existeCliente = await prisma.cliente.findFirst({
       where: {
         nome: formDataValidade.data.nome,
@@ -66,9 +66,9 @@ export default async function criaCliente(prevState: any, formData: FormData) {
       message: "Cliente criado com sucesso!",
     };
   } catch (error) {
-    console.log(error);
-    return {
-      message: `Erro ao criar cliente: ${error}`,
-    };
+    console.log("Erro ao criar cliente: ", error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
   }
 }

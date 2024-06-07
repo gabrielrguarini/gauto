@@ -109,7 +109,7 @@ export default function CriarClienteDialog() {
                 type="button"
                 onClick={() => setProdutos([])}
               >
-                Limpar
+                Limpar Produtos
               </Button>
               <DialogClose asChild>
                 <Button
