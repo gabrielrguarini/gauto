@@ -10,11 +10,15 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^31.3.2",
+    "@ag-grid-community/core": "^31.3.2",
+    "@ag-grid-community/react": "^31.3.2",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-table": "^8.17.3",
+    "ag-grid-community": "^31.3.2",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
