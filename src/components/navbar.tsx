@@ -1,4 +1,5 @@
 import { BarChart3, Box, FileBox, User } from "lucide-react";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,6 +8,8 @@ export default function Navbar() {
     <nav className="flex flex-col min-w-48 h-screen shadow-lg justify-between">
       <div>
         <h3 className="p-2 text-xl font-semibold">Gauto</h3>
+        <div className="h-[1px] w-11/12 bg-slate-300 mx-auto"></div>
+
         <ul className="flex flex-col space-y-2 p-2 font-semibold">
           <li className="rounded-lg p-2 hover:bg-slate-300">
             <Link className="flex gap-4" href="/">
