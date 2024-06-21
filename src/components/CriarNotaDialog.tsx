@@ -38,7 +38,7 @@ export interface todosClientesInterface {
   dataDeAtualizacao?: Date;
 }
 
-export default function CriarClienteDialog() {
+export default function CriarNotaDialog() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [todosClientes, setTodosClientes] =
     useState<todosClientesInterface[]>();

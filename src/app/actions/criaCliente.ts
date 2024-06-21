@@ -63,6 +63,7 @@ export default async function criaCliente(prevState: any, formData: FormData) {
       },
     });
     console.log("Cliente criado com sucesso! ", cliente);
+    revalidatePath("/clientes");
     return {
       message: "Cliente criado com sucesso!",
     };

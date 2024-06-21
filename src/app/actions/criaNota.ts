@@ -1,6 +1,7 @@
 "use server";
 import { Produto } from "@/components/ui/listaProdutos";
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
@@ -65,7 +66,8 @@ export async function CriaNota(
         },
       },
     });
-
+    revalidatePath("/notas");
+    revalidatePath("/produtos");
     return {
       message: "Nota criada com sucesso",
     };

@@ -11,7 +11,8 @@ export default async function Clientes() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="flex items-center text-2xl font-bold ml-4 gap-2">
-            Clientes <User />
+            Clientes
+            <User />
           </h1>
           <p className="text-lg ml-4">Clientes cadastrados: {data.length}</p>
         </div>
