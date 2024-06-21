@@ -8,6 +8,7 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 import { useState } from "react";
+import { converteMoeda } from "@/lib/utils";
 
 interface Produto {
   nome: string;
@@ -30,11 +31,46 @@ export default function Tabela({ produtos }: tabelaProps) {
       headerName: "Nome",
       filter: true,
     },
-    { field: "quantidade", headerName: "Quantidade" },
-    { field: "valorDeCompra", headerName: "Valor de Compra" },
-    { field: "valorDeVenda", headerName: "Valor de Venda" },
+    {
+      field: "quantidade",
+      headerName: "Quantidade",
+      initialWidth: 70,
+    },
+    {
+      field: "valorDeCompra",
+      valueFormatter: (params) => converteMoeda(params.value),
+      headerName: "Valor de Compra",
+      initialWidth: 130,
+    },
+    {
+      field: "valorDeVenda",
+      valueFormatter: (params) => converteMoeda(params.value),
+      headerName: "Valor de Venda",
+      initialWidth: 130,
+    },
     { field: "cliente", headerName: "Cliente" },
-    { field: "status", headerName: "Status" },
+    { field: "status", headerName: "Status", initialWidth: 95 },
+    {
+      headerName: "Custo Total",
+      valueFormatter: (params) =>
+        converteMoeda(params.data.valorDeCompra * params.data.quantidade),
+      initialWidth: 120,
+    },
+    {
+      headerName: "Valor de Venda Total",
+      valueFormatter: (params) =>
+        converteMoeda(params.data.valorDeVenda * params.data.quantidade),
+      initialWidth: 150,
+    },
+    {
+      headerName: "Lucro Total",
+      valueFormatter: (params) =>
+        converteMoeda(
+          (params.data.valorDeVenda - params.data.valorDeCompra) *
+            params.data.quantidade
+        ),
+      initialWidth: 120,
+    },
   ]);
 
   return (
