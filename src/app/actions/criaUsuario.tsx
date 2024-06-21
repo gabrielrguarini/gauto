@@ -2,11 +2,9 @@
 const bcrypt = require("bcryptjs");
 
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export const CreateUserschema = z.object({
   email: z

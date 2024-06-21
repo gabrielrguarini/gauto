@@ -1,10 +1,9 @@
 "use server";
 import { Produto } from "@/components/ui/listaProdutos";
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 const CriaNotaSchema = z.object({
   produtos: z.array(

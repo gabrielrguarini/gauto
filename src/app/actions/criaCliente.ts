@@ -1,9 +1,8 @@
 "use server";
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 const CreateClienteSchema = z.object({
   nome: z

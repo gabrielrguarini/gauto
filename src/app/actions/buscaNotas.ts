@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-
+import prisma from "@/lib/prisma";
 export default async function buscaNotas() {
   try {
-    const prisma = new PrismaClient();
     const todasNotas = await prisma.nota.findMany({
       orderBy: {
         id: "desc",

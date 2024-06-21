@@ -1,7 +1,7 @@
 "use server";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LogaUsuario } from "../../actions/logaUsuario";
+import { LogaUsuario } from "../actions/logaUsuario";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 

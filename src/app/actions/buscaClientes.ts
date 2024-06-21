@@ -1,7 +1,6 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 export async function BuscaClientes() {
-  const prisma = new PrismaClient();
   try {
     const todosClientes = await prisma.cliente.findMany({
       orderBy: {

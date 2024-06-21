@@ -23,6 +23,14 @@ export default function Tabela({ notas }: tabelaProps) {
     },
     { field: "clienteId", headerName: "Id do Cliente" },
     { field: "cliente.nome", headerName: "Cliente" },
+    {
+      field: "dataDeCriacao",
+      headerName: "Data",
+      valueFormatter: (params) => {
+        const date = params.value ? new Date(params.value) : null;
+        return date ? date.toLocaleDateString() : "Sem Data de Criação";
+      },
+    },
   ]);
 
   return (
