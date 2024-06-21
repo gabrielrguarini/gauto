@@ -3,7 +3,7 @@ import Navbar from "@/components/navbar";
 import { redirect } from "next/navigation";
 
 export default async function PrivateLayout({
-  children, // will be a page or nested layout
+  children,
 }: {
   children: React.ReactNode;
 }) {
