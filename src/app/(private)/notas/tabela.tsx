@@ -22,6 +22,7 @@ export default function Tabela({ notas }: tabelaProps) {
       filter: true,
     },
     { field: "clienteId", headerName: "Id do Cliente" },
+    { field: "cliente.nome", headerName: "Cliente" },
   ]);
 
   return (
