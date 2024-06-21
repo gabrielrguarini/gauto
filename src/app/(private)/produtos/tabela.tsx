@@ -57,7 +57,7 @@ export default function Tabela({ produtos }: tabelaProps) {
       initialWidth: 120,
     },
     {
-      headerName: "Valor de Venda Total",
+      headerName: "Venda Total",
       valueFormatter: (params) =>
         converteMoeda(params.data.valorDeVenda * params.data.quantidade),
       initialWidth: 150,
