@@ -45,4 +45,7 @@ model Nota {
   produtos  Produto[]
   cliente   Cliente   @relation(fields: [clienteId], references: [id])
   clienteId Int
+
+  dataDeCriacao     DateTime @default(now())
+  dataDeAtualizacao DateTime @default(now()) @updatedAt
 }
