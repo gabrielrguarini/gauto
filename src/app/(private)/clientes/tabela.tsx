@@ -11,6 +11,8 @@ import { Cliente } from "@prisma/client";
 
 import { useState } from "react";
 
+import EditaClienteDialog from "@/components/EditaClienteDialog";
+
 interface tabelaProps {
   clientes: Cliente[];
 }
@@ -26,6 +28,11 @@ export default function Tabela({ clientes }: tabelaProps) {
     { field: "cidade", headerName: "Cidade" },
     { field: "endereco", headerName: "Endereço" },
     { field: "telefone", headerName: "Telefone" },
+    {
+      field: "telefone",
+      headerName: "Editar",
+      cellRenderer: (params: any) => <EditaClienteDialog id={params.data.id} />,
+    },
   ]);
 
   return (

@@ -19,21 +19,33 @@ import buscaClienteId from "@/app/actions/buscaClienteId";
 import { Cliente } from "@prisma/client";
 
 export default function EditaClienteDialog({ id }: { id: number }) {
-  const [cliente, setCliente] = useState<Cliente | null>(null);
-  useEffect(() => {
-    async function fetchCliente() {
-      const clienteAwait = await buscaClienteId(1);
+  const [cliente, setCliente] = useState<Cliente>({
+    id: 0,
+    nome: "",
+    endereco: "",
+    cidade: "",
+    telefone: "",
+    dataDeCriacao: new Date(),
+    dataDeAtualizacao: new Date(),
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const fetchCliente = async () => {
+    const clienteAwait = await buscaClienteId(id);
+    if (clienteAwait) {
       setCliente(clienteAwait);
     }
-    fetchCliente();
-  }, []);
-  if (cliente === null) return null;
+  };
+  useEffect(() => {
+    if (isDialogOpen) {
+      fetchCliente();
+    }
+  }, [isDialogOpen]);
   return (
     <>
-      <Dialog>
+      <Dialog onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button className="px-2">
-            <SquarePen size={20} />
+          <Button className="text px-1 py-0 h-6">
+            <SquarePen height={12} width={12} />
           </Button>
         </DialogTrigger>
         <DialogContent className="max-w-lg">
