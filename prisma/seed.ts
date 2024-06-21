@@ -18,7 +18,7 @@ async function main() {
         nome: "Maria Silva",
         endereco: "Avenida Paulista, 1000",
         cidade: "São Paulo",
-        telefone: "11987654321",
+        telefone: "(11) 98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -26,7 +26,7 @@ async function main() {
         nome: "João Souza",
         endereco: "Rua XV de Novembro, 500",
         cidade: "Curitiba",
-        telefone: "41987654321",
+        telefone: "(41)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -34,7 +34,7 @@ async function main() {
         nome: "Ana Pereira",
         endereco: "Avenida Atlântica, 300",
         cidade: "Rio de Janeiro",
-        telefone: "21987654321",
+        telefone: "(21)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -42,7 +42,7 @@ async function main() {
         nome: "Carlos Alberto",
         endereco: "Rua das Flores, 150",
         cidade: "Belo Horizonte",
-        telefone: "31987654321",
+        telefone: "(31)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -50,7 +50,7 @@ async function main() {
         nome: "Fernanda Lima",
         endereco: "Avenida Goiás, 700",
         cidade: "Goiânia",
-        telefone: "62987654321",
+        telefone: "(62)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -58,7 +58,7 @@ async function main() {
         nome: "Rafael Costa",
         endereco: "Rua das Acácias, 250",
         cidade: "Porto Alegre",
-        telefone: "51987654321",
+        telefone: "(51)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -66,7 +66,7 @@ async function main() {
         nome: "Gabriela Santos",
         endereco: "Avenida Beira Mar, 400",
         cidade: "Fortaleza",
-        telefone: "85987654321",
+        telefone: "(85)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -74,7 +74,7 @@ async function main() {
         nome: "Ricardo Gomes",
         endereco: "Rua dos Pinheiros, 800",
         cidade: "Florianópolis",
-        telefone: "48987654321",
+        telefone: "(48)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -82,7 +82,7 @@ async function main() {
         nome: "Juliana Rocha",
         endereco: "Avenida das Américas, 600",
         cidade: "Salvador",
-        telefone: "71987654321",
+        telefone: "(71)98765-4321",
       },
     }),
     prisma.cliente.create({
@@ -90,7 +90,7 @@ async function main() {
         nome: "Thiago Almeida",
         endereco: "Rua São João, 200",
         cidade: "Recife",
-        telefone: "81987654321",
+        telefone: "(81)98765-4321",
       },
     }),
   ]);
