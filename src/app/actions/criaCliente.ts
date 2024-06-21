@@ -26,6 +26,7 @@ const CreateClienteSchema = z.object({
 });
 
 export default async function criaCliente(prevState: any, formData: FormData) {
+  console.log(formData.get("telefone"));
   try {
     const formDataValidade = CreateClienteSchema.safeParse({
       nome: formData.get("nome"),

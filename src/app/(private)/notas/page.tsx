@@ -11,9 +11,7 @@ export default async function Notas() {
         Notas
         <FileBox />
       </h1>
-      <p className="text-lg ml-4">
-        Quantidade de notas cadastradas: {data.length}
-      </p>
+      <p className="text-lg ml-4">Notas cadastradas: {data.length}</p>
       <Tabela notas={data} />
     </div>
   );
