@@ -1,16 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
 import SelectStatus from "./selectStatus";
-
-export interface Produto {
-  nome: string;
-  quantidade: string;
-  valorDeVenda?: string;
-  valorDeCompra?: string;
-  status?: string;
-}
+import { Produto } from "@prisma/client";
 
 interface ProdutoProps {
   produtos: Produto[];
@@ -18,12 +11,14 @@ interface ProdutoProps {
 }
 
 export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
-  const [dados, setDados] = useState<Produto>({
+  const [dados, setDados] = useState({
+    id: 0,
     nome: "",
-    quantidade: "",
-    valorDeVenda: "",
-    valorDeCompra: "",
+    quantidade: 0,
+    valorDeVenda: 0,
+    valorDeCompra: 0,
     status: "",
+    notaId: 0,
   });
 
   const adicionarProduto = (produto: Produto) => {
@@ -34,7 +29,6 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
   const removerProduto = (index: number) => {
     setProdutos(produtos.filter((_, i) => i !== index));
   };
-
   return (
     <div>
       <div className="flex flex-col gap-1 max-h-96 overflow-y-auto">
@@ -98,7 +92,9 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
         />
         <Input
           placeholder="Quantidade"
-          onChange={(e) => setDados({ ...dados, quantidade: e.target.value })}
+          onChange={(e) =>
+            setDados({ ...dados, quantidade: Number(e.target.value) })
+          }
           value={dados.quantidade}
           type="number"
           step="1"
@@ -106,7 +102,9 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
         />
         <Input
           placeholder="Valor de venda"
-          onChange={(e) => setDados({ ...dados, valorDeVenda: e.target.value })}
+          onChange={(e) =>
+            setDados({ ...dados, valorDeVenda: Number(e.target.value) })
+          }
           value={dados.valorDeVenda}
           type="number"
           step="0.01"
@@ -115,7 +113,7 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
         <Input
           placeholder="Valor de compra"
           onChange={(e) =>
-            setDados({ ...dados, valorDeCompra: e.target.value })
+            setDados({ ...dados, valorDeCompra: Number(e.target.value) })
           }
           value={dados.valorDeCompra}
           type="number"

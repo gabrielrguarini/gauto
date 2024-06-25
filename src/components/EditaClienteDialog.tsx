@@ -14,7 +14,7 @@ import {
 import { Input } from "./ui/input";
 import { InputTel } from "./ui/inputTel";
 import SubmitButton from "./ui/submitButton";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import buscaClienteId from "@/app/actions/buscaClienteId";
 import { Cliente } from "@prisma/client";
 
@@ -29,17 +29,20 @@ export default function EditaClienteDialog({ id }: { id: number }) {
     dataDeAtualizacao: new Date(),
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const fetchCliente = async () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchCliente = useCallback(async () => {
     const clienteAwait = await buscaClienteId(id);
     if (clienteAwait) {
       setCliente(clienteAwait);
+      setIsLoading(false);
     }
-  };
+  }, [id]);
   useEffect(() => {
     if (isDialogOpen) {
+      setIsLoading(true);
       fetchCliente();
     }
-  });
+  }, [isDialogOpen, fetchCliente]);
   return (
     <>
       <Dialog onOpenChange={setIsDialogOpen}>
@@ -50,9 +53,13 @@ export default function EditaClienteDialog({ id }: { id: number }) {
         </DialogTrigger>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Editar Cliente</DialogTitle>
+            <DialogTitle>
+              {isLoading ? "Carregando..." : "Editar Cliente"}
+            </DialogTitle>
             <DialogDescription>
-              Modifique para editar os dados do cliente.
+              {isLoading
+                ? "Aguarde, carregando os dados do cliente."
+                : "Modifique para editar os dados do cliente."}
             </DialogDescription>
           </DialogHeader>
           <form
@@ -60,33 +67,33 @@ export default function EditaClienteDialog({ id }: { id: number }) {
             className="flex flex-col mt-4 gap-2"
           >
             <Input
-              placeholder="Nome*"
+              placeholder={isLoading ? "Carregando..." : "Nome"}
               name="nome"
-              value={cliente?.nome}
+              value={cliente.nome}
               onChange={(e) => setCliente({ ...cliente, nome: e.target.value })}
             />
             <Input
-              placeholder="Cidade*"
+              placeholder={isLoading ? "Carregando..." : "Cidade"}
               name="cidade"
-              value={cliente?.cidade}
+              value={cliente.cidade}
               onChange={(e) =>
                 setCliente({ ...cliente, cidade: e.target.value })
               }
             />
             <Input
-              placeholder="Endereço"
+              placeholder={isLoading ? "Carregando..." : "Endereço"}
               name="endereco"
-              value={cliente?.endereco ? cliente.endereco : ""}
+              value={cliente.endereco ? cliente.endereco : ""}
               onChange={(e) =>
                 setCliente({ ...cliente, endereco: e.target.value })
               }
             />
             <InputTel
-              placeholder="Telefone"
+              placeholder={isLoading ? "Carregando..." : "Telefone"}
               name="telefone"
               value={cliente?.telefone ? cliente.telefone : ""}
               onChange={(e) =>
-                setCliente({ ...cliente, telefone: e.target.value })
+                setCliente({ ...cliente, telefone: e.currentTarget.value })
               }
             />
             <DialogFooter>

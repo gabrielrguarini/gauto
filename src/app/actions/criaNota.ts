@@ -1,5 +1,5 @@
 "use server";
-import { Produto } from "@/components/ui/listaProdutos";
+import { Produto } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 

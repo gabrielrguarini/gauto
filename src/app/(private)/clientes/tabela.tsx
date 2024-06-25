@@ -27,7 +27,15 @@ export default function Tabela({ clientes }: tabelaProps) {
     },
     { field: "cidade", headerName: "Cidade" },
     { field: "endereco", headerName: "Endereço" },
-    { field: "telefone", headerName: "Telefone" },
+    {
+      field: "telefone",
+      headerName: "Telefone",
+      valueFormatter: (params) =>
+        params.value
+          .replace(/\D/g, "")
+          .replace(/^(\d{2})(\d)/g, "($1) $2")
+          .replace(/(\d{4,5})(\d{4})/g, "$1 - $2"),
+    },
     {
       field: "telefone",
       headerName: "Editar",
