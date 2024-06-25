@@ -3,6 +3,8 @@ import { FileBox } from "lucide-react";
 import Tabela from "./tabela";
 import buscaNotas from "@/app/actions/buscaNotas";
 import CriarNotaDialog from "@/components/CriarNotaDialog";
+import { Suspense } from "react";
+import { Button } from "@/components/ui/button";
 
 export default async function Notas() {
   const data = await buscaNotas();
@@ -16,9 +18,13 @@ export default async function Notas() {
           </h1>
           <p className="text-lg ml-4">Notas cadastradas: {data.length}</p>
         </div>
-        <CriarNotaDialog />
+        <Suspense fallback={<Button disabled>Carregando...</Button>}>
+          <CriarNotaDialog />
+        </Suspense>
       </div>
-      <Tabela notas={data} />
+      <Suspense fallback={<h1>Carregando...</h1>}>
+        <Tabela notas={data} />
+      </Suspense>
     </div>
   );
 }

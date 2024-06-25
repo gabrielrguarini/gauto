@@ -3,6 +3,7 @@ import Tabela from "./tabela";
 import { BuscaClientes } from "../../actions/buscaClientes";
 import { User } from "lucide-react";
 import CriarClienteDialog from "@/components/CriarClienteDialog";
+import { Suspense } from "react";
 
 export default async function Clientes() {
   const data = await BuscaClientes();
@@ -18,8 +19,9 @@ export default async function Clientes() {
         </div>
         <CriarClienteDialog />
       </div>
-
-      <Tabela clientes={data} />
+      <Suspense fallback={<h1>Carregando...</h1>}>
+        <Tabela clientes={data} />
+      </Suspense>
     </div>
   );
 }

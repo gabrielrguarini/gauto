@@ -39,7 +39,7 @@ export default function EditaClienteDialog({ id }: { id: number }) {
     if (isDialogOpen) {
       fetchCliente();
     }
-  }, [isDialogOpen]);
+  });
   return (
     <>
       <Dialog onOpenChange={setIsDialogOpen}>

@@ -2,6 +2,7 @@
 import { BuscaProdutos } from "@/app/actions/buscaProdutos";
 import Tabela from "@/app/(private)/produtos/tabela";
 import { Box } from "lucide-react";
+import { Suspense } from "react";
 
 export default async function Produtos() {
   const data = await BuscaProdutos();
@@ -11,7 +12,9 @@ export default async function Produtos() {
         Produtos <Box />
       </h1>
       <p className="flex text-lg ml-4">Quantidade de produtos: {data.length}</p>
-      <Tabela produtos={data} />
+      <Suspense fallback={<h1>Carregando...</h1>}>
+        <Tabela produtos={data} />
+      </Suspense>
     </div>
   );
 }

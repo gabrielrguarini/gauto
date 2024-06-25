@@ -36,7 +36,7 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      <div className="flex justify-self-end p-4 gap-4">
+      <div className="flex justify-self-end p-4 gap-2 items-center">
         <Image
           className="rounded-full border-solid border-2 border-slate-300"
           width={40}
@@ -44,8 +44,8 @@ export default function Navbar() {
           src="https://randomuser.me/api/portraits/lego/7.jpg"
           alt="Foto"
         />
-        <div className="h-9 leading-none">
-          <p className="text-sm font-semibold">Fulano de Tal</p>
+        <div className="flex flex-col justify-center ali h-9 leading-[0.7rem] items-center">
+          <p className="text-sm font-bold leading-[0.7rem]">Fulano de Tal</p>
           <span className="text-xs text-slate-400">Administrador</span>
         </div>
       </div>
