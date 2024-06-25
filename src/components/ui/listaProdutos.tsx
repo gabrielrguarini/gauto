@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "./input";
 import { Button } from "./button";
 import SelectStatus from "./selectStatus";
 import { Produto } from "@prisma/client";
+import CurrencyInput from "react-currency-input-field";
 
 interface ProdutoProps {
-  produtos: Produto[];
+  produtos: Produto[] | undefined;
   setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>;
 }
 
@@ -20,7 +21,9 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
     status: "",
     notaId: 0,
   });
-
+  if (produtos === undefined) {
+    return <div>Carregando...</div>;
+  }
   const adicionarProduto = (produto: Produto) => {
     setProdutos([...produtos, produto]);
     console.log(produtos);
@@ -29,6 +32,22 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
   const removerProduto = (index: number) => {
     setProdutos(produtos.filter((_, i) => i !== index));
   };
+
+  const handleChange = (id: number, field: string, value: string | number) => {
+    setProdutos((prevProdutos) =>
+      prevProdutos.map((produto) =>
+        produto.id === id ? { ...produto, [field]: value } : produto
+      )
+    );
+  };
+
+  const statusOptions = [
+    "Nenhum",
+    "Comprado",
+    "Cotado",
+    "Entregue",
+    "Em estoque",
+  ];
   return (
     <div>
       <div className="flex flex-col gap-1 max-h-96 overflow-y-auto">
@@ -46,21 +65,73 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
           <tbody>
             {produtos.map((produto, index) => (
               <tr className="border" key={index}>
-                <td className="">{produto.nome}</td>
-                <td>{produto.quantidade}</td>
-                <td>
-                  {`${Number(produto.valorDeVenda).toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}`}{" "}
+                <td className="">
+                  <input
+                    type="text"
+                    value={produto.nome}
+                    onChange={(e) =>
+                      handleChange(produto.id, "nome", e.target.value)
+                    }
+                  />
                 </td>
                 <td>
-                  {`${Number(produto.valorDeCompra).toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}`}{" "}
+                  <input
+                    type="text"
+                    value={produto.quantidade}
+                    onChange={(e) =>
+                      handleChange(produto.id, "quantidade", e.target.value)
+                    }
+                  />
                 </td>
-                <td>{produto.status}</td>
+
+                <td>
+                  <CurrencyInput
+                    type="text"
+                    value={produto.valorDeVenda}
+                    intlConfig={{ locale: "pt-BR", currency: "BRL" }}
+                    decimalScale={2}
+                    decimalSeparator=","
+                    groupSeparator="."
+                    onValueChange={(value) =>
+                      handleChange(
+                        produto.id,
+                        "valorDeCompra",
+                        value ? value : 0
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <CurrencyInput
+                    type="text"
+                    value={produto.valorDeCompra}
+                    intlConfig={{ locale: "pt-BR", currency: "BRL" }}
+                    decimalScale={2}
+                    decimalSeparator=","
+                    groupSeparator="."
+                    onValueChange={(value) =>
+                      handleChange(
+                        produto.id,
+                        "valorDeCompra",
+                        value ? value : 0
+                      )
+                    }
+                  />
+                </td>
+                <td>
+                  <select
+                    value={`${produto.status}`}
+                    onChange={(e) =>
+                      handleChange(produto.id, "status", e.target.value)
+                    }
+                  >
+                    {statusOptions.map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
+                  </select>
+                </td>
                 <td className="flex justify-center p-2">
                   <Button
                     variant={"destructive"}

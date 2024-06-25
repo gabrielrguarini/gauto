@@ -1,6 +1,6 @@
 "use client";
 
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact, CustomCellRendererProps } from "@ag-grid-community/react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef, ModuleRegistry } from "@ag-grid-community/core";
@@ -39,7 +39,9 @@ export default function Tabela({ clientes }: tabelaProps) {
     {
       field: "telefone",
       headerName: "Editar",
-      cellRenderer: (params: any) => <EditaClienteDialog id={params.data.id} />,
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <EditaClienteDialog id={params.data.id} />
+      ),
     },
   ]);
 

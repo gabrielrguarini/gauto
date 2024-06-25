@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { CriaNota } from "@/app/actions/criaNota";
-import ListaProdutos, { Produto } from "./ui/listaProdutos";
+import ListaProdutos from "./ui/listaProdutos";
 import { useEffect, useRef, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
@@ -27,6 +27,7 @@ import {
 import SubmitButton from "./ui/submitButton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
+import { Produto } from "@prisma/client";
 
 export interface todosClientesInterface {
   id: number;

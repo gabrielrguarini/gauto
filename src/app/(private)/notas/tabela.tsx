@@ -1,6 +1,6 @@
 "use client";
 
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact, CustomCellRendererProps } from "@ag-grid-community/react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { ColDef, ModuleRegistry } from "@ag-grid-community/core";
@@ -8,6 +8,7 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 import { Nota } from "@prisma/client";
 import { useState } from "react";
+import EditarNotaDialog from "@/components/EditaNotaDialog";
 
 interface tabelaProps {
   notas: Nota[];
@@ -30,6 +31,13 @@ export default function Tabela({ notas }: tabelaProps) {
         const date = params.value ? new Date(params.value) : null;
         return date ? date.toLocaleDateString() : "Sem Data de Criação";
       },
+    },
+    {
+      field: "editar",
+      headerName: "Editar",
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <EditarNotaDialog id={params.data.id} />
+      ),
     },
   ]);
 

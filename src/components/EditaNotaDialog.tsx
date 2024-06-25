@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import { CriaNota } from "@/app/actions/criaNota";
 import ListaProdutos from "./ui/listaProdutos";
-import { useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import BuscaNotaId from "@/app/actions/buscaNotaId";
 import {
@@ -29,10 +29,29 @@ import SubmitButton from "./ui/submitButton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { Cliente, Produto } from "@prisma/client";
+import buscaNotaId, { BuscaNotaIdType } from "@/app/actions/buscaNotaId";
 
 export default function EditarNotaDialog({ id }: { id: number }) {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dadosNota, setDadosNota] = useState<BuscaNotaIdType>();
+
+  const fetchNota = useCallback(async () => {
+    const notaAwait = await buscaNotaId(id);
+    if (notaAwait) {
+      setDadosNota(notaAwait);
+      setIsLoading(false);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (isDialogOpen) {
+      setIsLoading(true);
+      fetchNota();
+    }
+  }, [fetchNota, isDialogOpen]);
 
   useEffect(() => {
     async function fetchClientes() {
@@ -46,6 +65,7 @@ export default function EditarNotaDialog({ id }: { id: number }) {
     fetchClientes();
     fetchNota(id);
   }, [id]);
+
   const initialState = {
     erros: "",
     message: "",
@@ -73,7 +93,7 @@ export default function EditarNotaDialog({ id }: { id: number }) {
   if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
-      <Dialog modal>
+      <Dialog onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button>Editar Nota</Button>
         </DialogTrigger>
@@ -101,7 +121,15 @@ export default function EditarNotaDialog({ id }: { id: number }) {
                 ))}
               </SelectContent>
             </Select>
-            <ListaProdutos produtos={produtos} setProdutos={setProdutos} />
+            <Suspense
+              fallback={
+                <ListaProdutos
+                  produtos={dadosNota?.produtos}
+                  setProdutos={setProdutos}
+                />
+              }
+            ></Suspense>
+
             <DialogFooter className="self-end">
               <Button
                 variant={"destructive"}

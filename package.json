@@ -28,6 +28,7 @@
     "next-auth": "^5.0.0-beta.18",
     "next-themes": "^0.3.0",
     "react": "^18",
+    "react-currency-input-field": "^3.8.0",
     "react-dom": "^18",
     "react-text-mask": "^5.5.0",
     "sonner": "^1.4.41",

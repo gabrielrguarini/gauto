@@ -11,3 +11,7 @@ export function converteMoeda(valor: number) {
     currency: "BRL",
   }).format(valor);
 }
+
+export function retiraMoeda(valor: number) {
+  return valor.toString().replace("R$ ", "").replace(",", ".");
+}

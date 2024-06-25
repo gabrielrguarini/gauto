@@ -24,7 +24,6 @@ export default async function Notas() {
         </div>
         <Suspense fallback={<Button disabled>Carregando...</Button>}>
           <CriarNotaDialog />
-          <EditarNotaDialog id={10} />
         </Suspense>
       </div>
       <Suspense fallback={<h1>Carregando...</h1>}>
