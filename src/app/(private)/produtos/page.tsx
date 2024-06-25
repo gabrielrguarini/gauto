@@ -11,7 +11,10 @@ export default async function Produtos() {
       <h1 className="flex items-center text-2xl font-bold ml-4 gap-2">
         Produtos <Box />
       </h1>
-      <p className="flex text-lg ml-4">Quantidade de produtos: {data.length}</p>
+      <p className="flex text-lg ml-4">
+        Quantidade de produtos:
+        <Suspense fallback={" Carregando..."}>{data.length}</Suspense>
+      </p>
       <Suspense fallback={<h1>Carregando...</h1>}>
         <Tabela produtos={data} />
       </Suspense>

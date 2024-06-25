@@ -50,9 +50,9 @@ export default function EditaClienteDialog({ id }: { id: number }) {
         </DialogTrigger>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Criar cliente</DialogTitle>
+            <DialogTitle>Editar Cliente</DialogTitle>
             <DialogDescription>
-              Preencha os dados para criar um novo cliente.
+              Modifique para editar os dados do cliente.
             </DialogDescription>
           </DialogHeader>
           <form

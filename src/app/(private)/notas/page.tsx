@@ -16,7 +16,10 @@ export default async function Notas() {
             Notas
             <FileBox />
           </h1>
-          <p className="text-lg ml-4">Notas cadastradas: {data.length}</p>
+          <p className="text-lg ml-4">
+            Notas cadastradas:{" "}
+            <Suspense fallback={"Carregando..."}>{data.length}</Suspense>
+          </p>
         </div>
         <Suspense fallback={<Button disabled>Carregando...</Button>}>
           <CriarNotaDialog />

@@ -15,7 +15,10 @@ export default async function Clientes() {
             Clientes
             <User />
           </h1>
-          <p className="text-lg ml-4">Clientes cadastrados: {data.length}</p>
+          <p className="text-lg ml-4">
+            Clientes cadastrados:
+            {<Suspense fallback={"Carregando..."}>{data.length}</Suspense>}
+          </p>
         </div>
         <CriarClienteDialog />
       </div>
