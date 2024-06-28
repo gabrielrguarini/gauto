@@ -8,7 +8,6 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 import { useState } from "react";
-import { converteMoeda } from "@/lib/utils";
 import InputPersonalizado from "@/components/ui/inputPersonalizado";
 interface Produto {
   nome: string;

@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
-import { InputTel } from "./ui/inputTel";
 import SubmitButton from "./ui/submitButton";
 import { useCallback, useEffect, useState } from "react";
 import buscaClienteId from "@/app/actions/buscaClienteId";
