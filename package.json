@@ -30,6 +30,7 @@
     "react": "^18",
     "react-currency-input-field": "^3.8.0",
     "react-dom": "^18",
+    "react-number-format": "^5.4.0",
     "react-text-mask": "^5.5.0",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",

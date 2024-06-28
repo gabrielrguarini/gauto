@@ -12,12 +12,9 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { CriaNota } from "@/app/actions/criaNota";
 import ListaProdutos from "./ui/listaProdutos";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
-import BuscaNotaId from "@/app/actions/buscaNotaId";
 import {
   Select,
   SelectContent,
@@ -32,39 +29,32 @@ import { Cliente, Produto } from "@prisma/client";
 import buscaNotaId, { BuscaNotaIdType } from "@/app/actions/buscaNotaId";
 
 export default function EditarNotaDialog({ id }: { id: number }) {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [dadosNota, setDadosNota] = useState<BuscaNotaIdType>();
-
-  const fetchNota = useCallback(async () => {
-    const notaAwait = await buscaNotaId(id);
-    if (notaAwait) {
-      setDadosNota(notaAwait);
-      setIsLoading(false);
-    }
-  }, [id]);
+  const [dadosNota, setDadosNota] = useState<BuscaNotaIdType | null>();
+  const [produtos, setProdutos] = useState<Produto[]>([]);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const [dadosNotaFetch, clientes] = await Promise.all([
+          buscaNotaId(id),
+          BuscaClientes(),
+        ]);
+        setDadosNota(dadosNotaFetch);
+        setTodosClientes(clientes);
+        if (dadosNotaFetch) return setProdutos(dadosNotaFetch.produtos);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     if (isDialogOpen) {
-      setIsLoading(true);
-      fetchNota();
+      fetchData();
     }
-  }, [fetchNota, isDialogOpen]);
-
-  useEffect(() => {
-    async function fetchClientes() {
-      const todoClientes = await BuscaClientes();
-      setTodosClientes(todoClientes);
-    }
-    async function fetchNota(id: number) {
-      const nota = await BuscaNotaId(id);
-      if (nota) setProdutos(nota.produtos);
-    }
-    fetchClientes();
-    fetchNota(id);
-  }, [id]);
+  }, [isDialogOpen, id]);
 
   const initialState = {
     erros: "",
@@ -90,7 +80,6 @@ export default function EditarNotaDialog({ id }: { id: number }) {
   //     setProdutos([]);
   //   }
   // }, [state]);
-  if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
       <Dialog onOpenChange={setIsDialogOpen}>
@@ -108,7 +97,12 @@ export default function EditarNotaDialog({ id }: { id: number }) {
             action={() => console.log("Edita Nota")}
             className="flex flex-col mt-4 gap-2"
           >
-            <Input placeholder="Numero*" name="numero" required />
+            <Input
+              placeholder="Carregando nota*"
+              name="numero"
+              defaultValue={dadosNota?.numero}
+              required
+            />
             <Select name="cliente">
               <SelectTrigger>
                 <SelectValue placeholder="Cliente*" />
@@ -121,14 +115,7 @@ export default function EditarNotaDialog({ id }: { id: number }) {
                 ))}
               </SelectContent>
             </Select>
-            <Suspense
-              fallback={
-                <ListaProdutos
-                  produtos={dadosNota?.produtos}
-                  setProdutos={setProdutos}
-                />
-              }
-            ></Suspense>
+            <ListaProdutos produtos={produtos} setProdutos={setProdutos} />
 
             <DialogFooter className="self-end">
               <Button

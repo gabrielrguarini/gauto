@@ -17,6 +17,7 @@ import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import SubmitButton from "./ui/submitButton";
 import { InputTel } from "./ui/inputTel";
+import InputPersonalizado from "./ui/inputPersonalizado";
 
 const initialState = {
   message: "",
@@ -54,7 +55,7 @@ export default function CriarClienteDialog() {
             <Input placeholder="Nome*" name="nome" />
             <Input placeholder="Cidade*" name="cidade" />
             <Input placeholder="Endereço" name="endereco" />
-            <InputTel placeholder="Telefone" name="telefone" />
+            <InputPersonalizado placeholder="Telefone" name="telefone" />
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant={"outline"} type="button">

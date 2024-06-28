@@ -17,6 +17,7 @@ import SubmitButton from "./ui/submitButton";
 import { useCallback, useEffect, useState } from "react";
 import buscaClienteId from "@/app/actions/buscaClienteId";
 import { Cliente } from "@prisma/client";
+import InputPersonalizado from "./ui/inputPersonalizado";
 
 export default function EditaClienteDialog({ id }: { id: number }) {
   const [cliente, setCliente] = useState<Cliente>({
@@ -88,12 +89,16 @@ export default function EditaClienteDialog({ id }: { id: number }) {
                 setCliente({ ...cliente, endereco: e.target.value })
               }
             />
-            <InputTel
+            <InputPersonalizado
               placeholder={isLoading ? "Carregando..." : "Telefone"}
               name="telefone"
               value={cliente?.telefone ? cliente.telefone : ""}
-              onChange={(e) =>
-                setCliente({ ...cliente, telefone: e.currentTarget.value })
+              onValueChange={(values) =>
+                setCliente(
+                  values.value
+                    ? { ...cliente, telefone: values.value }
+                    : { ...cliente, telefone: "" }
+                )
               }
             />
             <DialogFooter>

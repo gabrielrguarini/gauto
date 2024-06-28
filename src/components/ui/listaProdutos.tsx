@@ -5,6 +5,8 @@ import { Button } from "./button";
 import SelectStatus from "./selectStatus";
 import { Produto } from "@prisma/client";
 import CurrencyInput from "react-currency-input-field";
+import { NumberFormatValues, NumericFormat } from "react-number-format";
+import InputPersonalizado from "./inputPersonalizado";
 
 interface ProdutoProps {
   produtos: Produto[] | undefined;
@@ -171,25 +173,28 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
           step="1"
           min="1"
         />
-        <Input
-          placeholder="Valor de venda"
-          onChange={(e) =>
-            setDados({ ...dados, valorDeVenda: Number(e.target.value) })
-          }
+        <InputPersonalizado
+          moeda
           value={dados.valorDeVenda}
-          type="number"
-          step="0.01"
-          min="0"
+          onValueChange={(values) =>
+            setDados(
+              values.floatValue
+                ? { ...dados, valorDeVenda: values.floatValue }
+                : { ...dados, valorDeVenda: 0 }
+            )
+          }
         />
-        <Input
+        <InputPersonalizado
+          moeda
           placeholder="Valor de compra"
-          onChange={(e) =>
-            setDados({ ...dados, valorDeCompra: Number(e.target.value) })
+          onValueChange={(values) =>
+            setDados(
+              values.floatValue
+                ? { ...dados, valorDeCompra: values.floatValue }
+                : { ...dados, valorDeCompra: 0 }
+            )
           }
           value={dados.valorDeCompra}
-          type="number"
-          step="0.01"
-          min="0"
         />
         <SelectStatus dados={dados} setDados={setDados} />
         <button type="button" onClick={() => adicionarProduto(dados)}>

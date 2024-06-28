@@ -12,6 +12,7 @@ import { Cliente } from "@prisma/client";
 import { useState } from "react";
 
 import EditaClienteDialog from "@/components/EditaClienteDialog";
+import InputPersonalizado from "@/components/ui/inputPersonalizado";
 
 interface tabelaProps {
   clientes: Cliente[];
@@ -30,11 +31,16 @@ export default function Tabela({ clientes }: tabelaProps) {
     {
       field: "telefone",
       headerName: "Telefone",
-      valueFormatter: (params) =>
-        params.value
-          .replace(/\D/g, "")
-          .replace(/^(\d{2})(\d)/g, "($1) $2")
-          .replace(/(\d{4,5})(\d{4})/g, "$1 - $2"),
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <InputPersonalizado
+          value={params.data.telefone}
+          type="tel"
+          displayType="text"
+          renderText={(formattedValue) => {
+            return <>{formattedValue}</>;
+          }}
+        />
+      ),
     },
     {
       field: "telefone",
