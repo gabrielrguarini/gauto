@@ -7,6 +7,7 @@ import { Suspense } from "react";
 
 export default async function Clientes() {
   const data = await BuscaClientes();
+
   return (
     <div className="h-screen w-full relative flex flex-col p-6">
       <div className="flex items-center justify-between">

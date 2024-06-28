@@ -4,7 +4,6 @@ import { Input } from "./input";
 import { Button } from "./button";
 import SelectStatus from "./selectStatus";
 import { Produto } from "@prisma/client";
-import CurrencyInput from "react-currency-input-field";
 import { NumberFormatValues, NumericFormat } from "react-number-format";
 import InputPersonalizado from "./inputPersonalizado";
 
@@ -87,35 +86,29 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
                 </td>
 
                 <td>
-                  <CurrencyInput
+                  <InputPersonalizado
+                    moeda
                     type="text"
                     value={produto.valorDeVenda}
-                    intlConfig={{ locale: "pt-BR", currency: "BRL" }}
-                    decimalScale={2}
-                    decimalSeparator=","
-                    groupSeparator="."
-                    onValueChange={(value) =>
+                    onValueChange={(values) =>
                       handleChange(
                         produto.id,
                         "valorDeCompra",
-                        value ? value : 0
+                        values.value ? values.value : 0
                       )
                     }
                   />
                 </td>
                 <td>
-                  <CurrencyInput
+                  <InputPersonalizado
+                    moeda
                     type="text"
                     value={produto.valorDeCompra}
-                    intlConfig={{ locale: "pt-BR", currency: "BRL" }}
-                    decimalScale={2}
-                    decimalSeparator=","
-                    groupSeparator="."
-                    onValueChange={(value) =>
+                    onValueChange={(values) =>
                       handleChange(
                         produto.id,
                         "valorDeCompra",
-                        value ? value : 0
+                        values.value ? values.value : 0
                       )
                     }
                   />

@@ -17,6 +17,9 @@ import { useCallback, useEffect, useState } from "react";
 import buscaClienteId from "@/app/actions/buscaClienteId";
 import { Cliente } from "@prisma/client";
 import InputPersonalizado from "./ui/inputPersonalizado";
+import EditaCliente from "@/app/actions/editaCliente";
+import { useFormState } from "react-dom";
+import { set } from "zod";
 
 export default function EditaClienteDialog({ id }: { id: number }) {
   const [cliente, setCliente] = useState<Cliente>({
@@ -43,6 +46,12 @@ export default function EditaClienteDialog({ id }: { id: number }) {
       fetchCliente();
     }
   }, [isDialogOpen, fetchCliente]);
+  const initialState = { errors: "", message: undefined };
+  const [state, formAction] = useFormState(
+    (state: any, formData: FormData) =>
+      EditaCliente(state, formData, cliente.id),
+    initialState
+  );
   return (
     <>
       <Dialog onOpenChange={setIsDialogOpen}>
@@ -62,10 +71,7 @@ export default function EditaClienteDialog({ id }: { id: number }) {
                 : "Modifique para editar os dados do cliente."}
             </DialogDescription>
           </DialogHeader>
-          <form
-            action={() => console.log("Edita Cliente Dialog")}
-            className="flex flex-col mt-4 gap-2"
-          >
+          <form action={formAction} className="flex flex-col mt-4 gap-2">
             <Input
               placeholder={isLoading ? "Carregando..." : "Nome"}
               name="nome"

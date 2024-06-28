@@ -4,12 +4,13 @@ import { useFormStatus } from "react-dom";
 
 export default function SubmitButton({
   children,
+  ...props
 }: {
   children: React.ReactNode;
 }) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending}>
+    <Button {...props} type="submit" disabled={pending}>
       {children}
     </Button>
   );

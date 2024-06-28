@@ -16,7 +16,6 @@ import criaCliente from "@/app/actions/criaCliente";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import SubmitButton from "./ui/submitButton";
-import { InputTel } from "./ui/inputTel";
 import InputPersonalizado from "./ui/inputPersonalizado";
 
 const initialState = {
