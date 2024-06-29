@@ -27,6 +27,7 @@ import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { Cliente, Produto } from "@prisma/client";
 import buscaNotaId, { BuscaNotaIdType } from "@/app/actions/buscaNotaId";
+import { EditaNota } from "@/app/actions/editaNota";
 
 export default function EditarNotaDialog({ id }: { id: number }) {
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
@@ -61,10 +62,11 @@ export default function EditarNotaDialog({ id }: { id: number }) {
     message: "",
     produtos: [],
   };
-  // const [state, formAction] = useFormState(
-  //   (state: any, formData: FormData) => CriaNota(state, formData, produtos),
-  //   initialState
-  // );
+  const [state, formAction] = useFormState(
+    (state: any, formData: FormData) =>
+      EditaNota(state, formData, produtos, id),
+    initialState
+  );
 
   // useEffect(() => {
   //   if (state.errors) {
@@ -93,10 +95,7 @@ export default function EditarNotaDialog({ id }: { id: number }) {
               Preencha os dados para editar uma nova nota.
             </DialogDescription>
           </DialogHeader>
-          <form
-            action={() => console.log("Edita Nota")}
-            className="flex flex-col mt-4 gap-2"
-          >
+          <form action={formAction} className="flex flex-col mt-4 gap-2">
             <Input
               placeholder="Carregando nota*"
               name="numero"
