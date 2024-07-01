@@ -48,8 +48,7 @@ export default function EditaClienteDialog({ id }: { id: number }) {
   }, [isDialogOpen, fetchCliente]);
   const initialState = { errors: "", message: undefined };
   const [state, formAction] = useFormState(
-    (state: any, formData: FormData) =>
-      EditaCliente(state, formData, cliente.id),
+    (state: any, formData: FormData) => EditaCliente(formData, cliente.id),
     initialState
   );
   return (

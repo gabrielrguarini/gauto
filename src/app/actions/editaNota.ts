@@ -13,7 +13,7 @@ const CriaNotaSchema = z.object({
       quantidade: z.coerce.number(),
       valorDeVenda: z.coerce.number(),
       valorDeCompra: z.coerce.number(),
-      status: z.string(),
+      status: z.string().nullable(),
     })
   ),
   numero: z.coerce.number(),
@@ -26,6 +26,7 @@ export async function EditaNota(
   produtos: Produto[],
   notaId: number
 ) {
+  console.log("produtos", produtos);
   try {
     const dataValidado = CriaNotaSchema.safeParse({
       numero: formData.get("numero"),

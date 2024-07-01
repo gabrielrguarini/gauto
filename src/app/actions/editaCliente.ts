@@ -24,11 +24,7 @@ const CreateClienteSchema = z.object({
   }),
 });
 
-export default async function EditaCliente(
-  prevState: any,
-  formData: FormData,
-  id: number
-) {
+export default async function EditaCliente(formData: FormData, id: number) {
   try {
     const formDataValida = CreateClienteSchema.safeParse({
       nome: formData.get("nome"),
@@ -80,7 +76,5 @@ export default async function EditaCliente(
   } catch (error) {
     console.log("Erro ao atualizar cliente: ", error);
     throw error;
-  } finally {
-    await prisma.$disconnect();
   }
 }

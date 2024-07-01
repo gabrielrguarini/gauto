@@ -38,18 +38,21 @@ export default function Tabela({ clientes }: { clientes: Cliente[] }) {
           }}
         />
       ),
+      width: 135,
     },
     {
       headerName: "Editar",
       cellRenderer: (params: CustomCellRendererProps) => (
         <EditaClienteDialog id={params.data.id} />
       ),
+      width: 70,
     },
     {
       headerName: "Excluir",
       cellRenderer: (params: CustomCellRendererProps) => (
         <ExcluiButton className="text px-1 py-0 h-6" id={params.data.id} />
       ),
+      width: 75,
     },
   ]);
 

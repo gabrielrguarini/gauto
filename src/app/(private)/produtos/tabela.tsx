@@ -22,12 +22,7 @@ interface Produto {
   status: string | null;
 }
 
-interface tabelaProps {
-  produtos: Produto[];
-}
-
-export default function Tabela({ produtos }: tabelaProps) {
-  const [rowData] = useState<Produto[]>(produtos);
+export default function Tabela({ produtos }: { produtos: Produto[] }) {
   const [colDefs] = useState<ColDef[]>([
     {
       field: "nome",
@@ -123,7 +118,7 @@ export default function Tabela({ produtos }: tabelaProps) {
 
   return (
     <div className="ag-theme-quartz h-full">
-      <AgGridReact rowData={rowData} columnDefs={colDefs} rowHeight={25} />
+      <AgGridReact rowData={produtos} columnDefs={colDefs} rowHeight={25} />
     </div>
   );
 }

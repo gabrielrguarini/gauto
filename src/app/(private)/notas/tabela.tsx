@@ -10,12 +10,7 @@ import { Nota } from "@prisma/client";
 import { useState } from "react";
 import EditarNotaDialog from "@/components/EditaNotaDialog";
 
-interface tabelaProps {
-  notas: Nota[];
-}
-
-export default function Tabela({ notas }: tabelaProps) {
-  const [rowData] = useState<Nota[]>(notas);
+export default function Tabela({ notas }: { notas: Nota[] }) {
   const [colDefs] = useState<ColDef[]>([
     {
       field: "numero",
@@ -43,7 +38,7 @@ export default function Tabela({ notas }: tabelaProps) {
 
   return (
     <div className="ag-theme-quartz h-full">
-      <AgGridReact rowData={rowData} columnDefs={colDefs} rowHeight={25} />
+      <AgGridReact rowData={notas} columnDefs={colDefs} rowHeight={25} />
     </div>
   );
 }

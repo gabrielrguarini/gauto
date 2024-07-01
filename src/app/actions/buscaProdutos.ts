@@ -20,7 +20,7 @@ export async function BuscaProdutos() {
       quantidade: produto.quantidade,
       valorDeCompra: produto.valorDeCompra,
       valorDeVenda: produto.valorDeVenda,
-      cliente: produto.nota?.cliente.nome || "Sem cliente",
+      cliente: produto.nota?.cliente?.nome || "Sem cliente",
       status: produto.status,
     }));
 

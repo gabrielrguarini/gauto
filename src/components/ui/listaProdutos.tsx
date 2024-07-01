@@ -8,7 +8,7 @@ import { NumberFormatValues, NumericFormat } from "react-number-format";
 import InputPersonalizado from "./inputPersonalizado";
 
 interface ProdutoProps {
-  produtos: Produto[] | undefined;
+  produtos: Produto[];
   setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>;
 }
 
@@ -164,7 +164,7 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
           value={dados.quantidade}
           type="number"
           step="1"
-          min="1"
+          min="0"
         />
         <InputPersonalizado
           moeda
