@@ -18,7 +18,7 @@ export default function Tabela({ notas }: { notas: Nota[] }) {
       headerName: "Número",
       filter: true,
     },
-    { field: "clienteId", headerName: "Id do Cliente" },
+    { field: "clienteId", headerName: "Id do Cliente", width: 60 },
     { field: "cliente.nome", headerName: "Cliente" },
     {
       field: "dataDeCriacao",
@@ -27,6 +27,7 @@ export default function Tabela({ notas }: { notas: Nota[] }) {
         const date = params.value ? new Date(params.value) : null;
         return date ? date.toLocaleDateString() : "Sem Data de Criação";
       },
+      width: 110,
     },
     {
       field: "editar",
@@ -34,13 +35,27 @@ export default function Tabela({ notas }: { notas: Nota[] }) {
       cellRenderer: (params: CustomCellRendererProps) => (
         <EditarNotaDialog id={params.data.id} />
       ),
+      width: 70,
+      cellStyle: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      },
     },
     {
       headerName: "Excluir",
       cellRenderer: (params: CustomCellRendererProps) => (
-        <ExcluiNotaButton className="text px-1 py-0 h-6" id={params.data.id} />
+        <ExcluiNotaButton
+          className="text px-1 py-0 h-6 items-center justify-center"
+          id={params.data.id}
+        />
       ),
       width: 75,
+      cellStyle: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      },
     },
   ]);
 

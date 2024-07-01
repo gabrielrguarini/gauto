@@ -28,6 +28,7 @@ import { toast } from "sonner";
 import { Cliente, Produto } from "@prisma/client";
 import buscaNotaId, { BuscaNotaIdType } from "@/app/actions/buscaNotaId";
 import { EditaNota } from "@/app/actions/editaNota";
+import { SquarePen } from "lucide-react";
 
 export default function EditarNotaDialog({ id }: { id: number }) {
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
@@ -86,7 +87,9 @@ export default function EditarNotaDialog({ id }: { id: number }) {
     <div className="relative">
       <Dialog onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button>Editar Nota</Button>
+          <Button className="text px-1 py-0 h-6">
+            <SquarePen height={12} width={12} />
+          </Button>
         </DialogTrigger>
         <DialogContent className="w-full h-full content-start">
           <DialogHeader>
