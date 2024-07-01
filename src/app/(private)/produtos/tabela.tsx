@@ -1,14 +1,18 @@
 "use client";
 
-import { AgGridReact, CustomCellRendererProps } from "@ag-grid-community/react";
+import { AgGridReact } from "@ag-grid-community/react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import { ColDef, ModuleRegistry } from "@ag-grid-community/core";
+import {
+  ColDef,
+  ModuleRegistry,
+  ValueFormatterParams,
+} from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-import { useState } from "react";
-import InputPersonalizado from "@/components/ui/inputPersonalizado";
+import { memo, useState } from "react";
+import { numericFormatter } from "react-number-format";
 interface Produto {
   nome: string;
   quantidade: number;
@@ -36,80 +40,83 @@ export default function Tabela({ produtos }: tabelaProps) {
       initialWidth: 70,
     },
     {
-      field: "valorDeCompra",
-      cellRenderer: (params: CustomCellRendererProps) => (
-        <InputPersonalizado
-          moeda
-          value={params.data.valorDeCompra}
-          displayType="text"
-          renderText={(formattedValue) => {
-            return <>{formattedValue}</>;
-          }}
-        />
-      ),
       headerName: "Valor de Compra",
+      field: "valorDeCompra",
+      valueFormatter: (params: ValueFormatterParams) =>
+        numericFormatter(`${params.data.valorDeCompra}`, {
+          allowLeadingZeros: false,
+          decimalScale: 2,
+          decimalSeparator: ",",
+          thousandSeparator: ".",
+          fixedDecimalScale: true,
+          prefix: "R$ ",
+        }),
       initialWidth: 130,
     },
     {
-      field: "valorDeVenda",
-      cellRenderer: (params: CustomCellRendererProps) => (
-        <InputPersonalizado
-          moeda
-          value={params.data.valorDeVenda}
-          displayType="text"
-          renderText={(formattedValue) => {
-            return <>{formattedValue}</>;
-          }}
-        />
-      ),
       headerName: "Valor de Venda",
+      valueFormatter: (params: ValueFormatterParams) =>
+        numericFormatter(`${params.data.valorDeVenda}`, {
+          allowLeadingZeros: false,
+          decimalScale: 2,
+          decimalSeparator: ",",
+          thousandSeparator: ".",
+          fixedDecimalScale: true,
+          prefix: "R$ ",
+        }),
       initialWidth: 130,
     },
     { field: "cliente", headerName: "Cliente" },
     { field: "status", headerName: "Status", initialWidth: 95 },
     {
       headerName: "Custo Total",
-      cellRenderer: (params: CustomCellRendererProps) => (
-        <InputPersonalizado
-          moeda
-          value={params.data.valorDeCompra * params.data.quantidade}
-          displayType="text"
-          renderText={(formattedValue) => {
-            return <>{formattedValue}</>;
-          }}
-        />
-      ),
+      valueFormatter: (params: ValueFormatterParams) =>
+        numericFormatter(
+          `${params.data.valorDeCompra * params.data.quantidade}`,
+          {
+            allowLeadingZeros: false,
+            decimalScale: 2,
+            decimalSeparator: ",",
+            thousandSeparator: ".",
+            fixedDecimalScale: true,
+            prefix: "R$ ",
+          }
+        ),
       initialWidth: 120,
     },
     {
       headerName: "Venda Total",
-      cellRenderer: (params: CustomCellRendererProps) => (
-        <InputPersonalizado
-          moeda
-          value={params.data.valorDeVenda * params.data.quantidade}
-          displayType="text"
-          renderText={(formattedValue) => {
-            return <>{formattedValue}</>;
-          }}
-        />
-      ),
+      valueFormatter: (params: ValueFormatterParams) =>
+        numericFormatter(
+          `${params.data.valorDeVenda * params.data.quantidade}`,
+          {
+            allowLeadingZeros: false,
+            decimalScale: 2,
+            decimalSeparator: ",",
+            thousandSeparator: ".",
+            fixedDecimalScale: true,
+            prefix: "R$ ",
+          }
+        ),
       initialWidth: 150,
     },
     {
       headerName: "Lucro Total",
-      cellRenderer: (params: CustomCellRendererProps) => (
-        <InputPersonalizado
-          moeda
-          value={
+      valueFormatter: (params: ValueFormatterParams) =>
+        numericFormatter(
+          `${
             (params.data.valorDeVenda - params.data.valorDeCompra) *
             params.data.quantidade
+          }`,
+          {
+            allowLeadingZeros: false,
+            decimalScale: 2,
+            decimalSeparator: ",",
+            thousandSeparator: ".",
+            fixedDecimalScale: true,
+            prefix: "R$ ",
           }
-          displayType="text"
-          renderText={(formattedValue) => {
-            return <>{formattedValue}</>;
-          }}
-        />
-      ),
+        ),
       initialWidth: 120,
     },
   ]);
