@@ -16,6 +16,7 @@ export async function BuscaProdutos() {
     });
 
     const produtosComCliente = todosProdutos.map((produto) => ({
+      id: produto.id,
       nome: produto.nome,
       quantidade: produto.quantidade,
       valorDeCompra: produto.valorDeCompra,

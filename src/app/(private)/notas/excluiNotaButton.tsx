@@ -1,9 +1,9 @@
 "use client";
-import SubmitButton from "./submitButton";
 import { useFormState } from "react-dom";
-import ExcluiClienteId from "@/app/actions/excluiClienteId";
 import { Trash2Icon } from "lucide-react";
-export default function ExcluiButton({
+import SubmitButton from "@/components/ui/submitButton";
+import ExcluiNotaId from "@/app/actions/excluiNotaId";
+export default function ExcluiNotaButton({
   id,
   className,
   ...props
@@ -13,7 +13,7 @@ export default function ExcluiButton({
 }) {
   const initialState = { errors: "" };
   const [state, formAction] = useFormState(
-    () => ExcluiClienteId(id),
+    () => ExcluiNotaId(id),
     initialState
   );
   return (

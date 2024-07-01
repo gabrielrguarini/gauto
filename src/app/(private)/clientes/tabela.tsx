@@ -13,7 +13,7 @@ import { useState } from "react";
 
 import EditaClienteDialog from "@/components/EditaClienteDialog";
 import InputPersonalizado from "@/components/ui/inputPersonalizado";
-import ExcluiButton from "@/components/ui/excluiButton";
+import ExcluiClienteButton from "./excluiClienteButton";
 
 export default function Tabela({ clientes }: { clientes: Cliente[] }) {
   const [rowData] = useState<Cliente[]>(clientes);
@@ -50,7 +50,10 @@ export default function Tabela({ clientes }: { clientes: Cliente[] }) {
     {
       headerName: "Excluir",
       cellRenderer: (params: CustomCellRendererProps) => (
-        <ExcluiButton className="text px-1 py-0 h-6" id={params.data.id} />
+        <ExcluiClienteButton
+          className="text px-1 py-0 h-6"
+          id={params.data.id}
+        />
       ),
       width: 75,
     },

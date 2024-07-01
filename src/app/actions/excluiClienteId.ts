@@ -21,7 +21,7 @@ export default async function ExcluiClienteId(id: number) {
     });
     console.log("Cliente excluído: ", cliente);
     revalidatePath("/clientes");
-    return cliente;
+    return { message: "Cliente excluído com sucesso" };
   } catch (error) {
     console.error("Erro ao excluir cliente: ", error);
     return { errors: "Erro ao excluir cliente" };

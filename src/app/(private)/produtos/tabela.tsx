@@ -1,6 +1,6 @@
 "use client";
 
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact, CustomCellRendererProps } from "@ag-grid-community/react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import {
@@ -11,9 +11,11 @@ import {
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-import { memo, useState } from "react";
+import { useState } from "react";
 import { numericFormatter } from "react-number-format";
+import ExcluiProdutoButton from "./excluiProdutoButton";
 interface Produto {
+  id: number;
   nome: string;
   quantidade: number;
   valorDeCompra: number;
@@ -113,6 +115,16 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
           }
         ),
       initialWidth: 120,
+    },
+    {
+      headerName: "Excluir",
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <ExcluiProdutoButton
+          className="text px-1 py-0 h-6"
+          id={params.data.id}
+        />
+      ),
+      width: 75,
     },
   ]);
 

@@ -9,6 +9,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 import { Nota } from "@prisma/client";
 import { useState } from "react";
 import EditarNotaDialog from "@/components/EditaNotaDialog";
+import ExcluiNotaButton from "./excluiNotaButton";
 
 export default function Tabela({ notas }: { notas: Nota[] }) {
   const [colDefs] = useState<ColDef[]>([
@@ -33,6 +34,13 @@ export default function Tabela({ notas }: { notas: Nota[] }) {
       cellRenderer: (params: CustomCellRendererProps) => (
         <EditarNotaDialog id={params.data.id} />
       ),
+    },
+    {
+      headerName: "Excluir",
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <ExcluiNotaButton className="text px-1 py-0 h-6" id={params.data.id} />
+      ),
+      width: 75,
     },
   ]);
 
