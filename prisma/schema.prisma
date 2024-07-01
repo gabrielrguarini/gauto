@@ -43,8 +43,8 @@ model Nota {
   id        Int       @id @default(autoincrement())
   numero    Int
   produtos  Produto[]
-  cliente   Cliente   @relation(fields: [clienteId], references: [id])
-  clienteId Int
+  cliente   Cliente?  @relation(fields: [clienteId], references: [id])
+  clienteId Int?
 
   dataDeCriacao     DateTime @default(now())
   dataDeAtualizacao DateTime @default(now()) @updatedAt

@@ -13,12 +13,9 @@ import { useState } from "react";
 
 import EditaClienteDialog from "@/components/EditaClienteDialog";
 import InputPersonalizado from "@/components/ui/inputPersonalizado";
+import ExcluiButton from "@/components/ui/excluiButton";
 
-interface tabelaProps {
-  clientes: Cliente[];
-}
-
-export default function Tabela({ clientes }: tabelaProps) {
+export default function Tabela({ clientes }: { clientes: Cliente[] }) {
   const [rowData] = useState<Cliente[]>(clientes);
   const [colDefs] = useState<ColDef[]>([
     {
@@ -43,17 +40,22 @@ export default function Tabela({ clientes }: tabelaProps) {
       ),
     },
     {
-      field: "telefone",
       headerName: "Editar",
       cellRenderer: (params: CustomCellRendererProps) => (
         <EditaClienteDialog id={params.data.id} />
+      ),
+    },
+    {
+      headerName: "Excluir",
+      cellRenderer: (params: CustomCellRendererProps) => (
+        <ExcluiButton className="text px-1 py-0 h-6" id={params.data.id} />
       ),
     },
   ]);
 
   return (
     <div className="ag-theme-quartz h-full">
-      <AgGridReact rowData={rowData} columnDefs={colDefs} rowHeight={25} />
+      <AgGridReact rowData={clientes} columnDefs={colDefs} rowHeight={25} />
     </div>
   );
 }
