@@ -48,6 +48,7 @@ export default async function EditaProdutoId(formData: FormData, id: number) {
     revalidatePath("/produtos");
     revalidatePath("/notas");
     revalidatePath("/clientes");
+
     return { message: "Produto editado com sucesso" };
   } catch (error) {
     console.log(error);
