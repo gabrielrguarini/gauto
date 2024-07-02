@@ -16,14 +16,6 @@ export default async function Produtos() {
         Quantidade de produtos:
         <Suspense fallback={" Carregando..."}>{data.length}</Suspense>
       </p>
-      <EditaProdutoDialog
-        id={1}
-        nome="PlayStation 5"
-        quantidade={5}
-        valorDeVenda={4500}
-        valorDeCompra={4000}
-        status={null}
-      />
       <Suspense fallback={<h1>Carregando...</h1>}>
         <Tabela produtos={data} />
       </Suspense>
