@@ -6,6 +6,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import {
   ColDef,
   ModuleRegistry,
+  RowClassParams,
   ValueFormatterParams,
 } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
@@ -146,9 +147,30 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
       width: 75,
     },
   ]);
+  const getRowClass = (params: RowClassParams) => {
+    switch (params.data.status) {
+      // Fundo cinza claro, texto cinza escuro, fonte normal
+      case "comprado":
+        return "!bg-green-200 !text-green-900";
+      case "cotado":
+        return "!bg-yellow-200 !text-yellow-900 font-medium"; // Fundo azul claro, texto azul escuro, fonte média
+      case "estoque":
+        return "!bg-stone-300 !text-orange-500 font-medium";
+      case "entregue":
+        return "!bg-green-200 !text-green-900 font-medium"; // Fundo amarelo claro, texto amarelo escuro, fonte média
+      default:
+        return "";
+    }
+  };
+
   return (
     <div className="ag-theme-quartz h-full">
-      <AgGridReact rowData={produtos} columnDefs={colDefs} rowHeight={25} />
+      <AgGridReact
+        rowData={produtos}
+        columnDefs={colDefs}
+        rowHeight={25}
+        getRowClass={getRowClass}
+      />
     </div>
   );
 }

@@ -110,7 +110,7 @@ export default function EditaProdutoDialog({
               <SelectContent>
                 <SelectItem value="nenhum">Nenhum</SelectItem>
                 <SelectItem value="comprado">Comprado</SelectItem>
-                <SelectItem value="cotato">Cotato</SelectItem>
+                <SelectItem value="cotado">Cotado</SelectItem>
                 <SelectItem value="estoque">Em estoque</SelectItem>
                 <SelectItem value="entregue">Entregue</SelectItem>
               </SelectContent>
