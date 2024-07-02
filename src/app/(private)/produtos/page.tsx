@@ -3,6 +3,7 @@ import { BuscaProdutos } from "@/app/actions/buscaProdutos";
 import Tabela from "@/app/(private)/produtos/tabela";
 import { Box } from "lucide-react";
 import { Suspense } from "react";
+import EditaProdutoDialog from "@/components/EditaProdutoDialog";
 
 export default async function Produtos() {
   const data = await BuscaProdutos();

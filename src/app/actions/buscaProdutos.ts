@@ -23,6 +23,7 @@ export async function BuscaProdutos() {
       valorDeVenda: produto.valorDeVenda,
       cliente: produto.nota?.cliente?.nome || "Sem cliente",
       status: produto.status,
+      clienteId: produto.nota?.clienteId,
     }));
 
     return produtosComCliente;

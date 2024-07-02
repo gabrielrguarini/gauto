@@ -5,7 +5,6 @@ import buscaNotas from "@/app/actions/buscaNotas";
 import CriarNotaDialog from "@/components/CriarNotaDialog";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import EditarNotaDialog from "@/components/EditaNotaDialog";
 
 export default async function Notas() {
   const data = await buscaNotas();
