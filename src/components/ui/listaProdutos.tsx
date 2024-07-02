@@ -13,7 +13,7 @@ interface ProdutoProps {
 }
 
 export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
-  const [dados, setDados] = useState({
+  const [dados, setDados] = useState<Produto>({
     id: 0,
     nome: "",
     quantidade: 0,

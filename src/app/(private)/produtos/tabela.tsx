@@ -14,6 +14,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 import { useState } from "react";
 import { numericFormatter } from "react-number-format";
 import ExcluiProdutoButton from "./excluiProdutoButton";
+import EditaProdutoDialog from "@/components/EditaProdutoDialog";
 interface Produto {
   id: number;
   nome: string;
@@ -22,6 +23,7 @@ interface Produto {
   valorDeVenda: number;
   cliente: string;
   status: string | null;
+  clienteId?: number | null | undefined;
 }
 
 export default function Tabela({ produtos }: { produtos: Produto[] }) {
@@ -117,6 +119,23 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
       initialWidth: 120,
     },
     {
+      headerName: "Editar",
+      cellRenderer: (params: CustomCellRendererProps) => (
+        console.log(params.data.status),
+        (
+          <EditaProdutoDialog
+            id={params.data.id}
+            nome={params.data.nome}
+            quantidade={params.data.quantidade}
+            valorDeVenda={params.data.valorDeVenda}
+            valorDeCompra={params.data.valorDeCompra}
+            status={params.data.status}
+          />
+        )
+      ),
+      width: 75,
+    },
+    {
       headerName: "Excluir",
       cellRenderer: (params: CustomCellRendererProps) => (
         <ExcluiProdutoButton
@@ -127,7 +146,6 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
       width: 75,
     },
   ]);
-
   return (
     <div className="ag-theme-quartz h-full">
       <AgGridReact rowData={produtos} columnDefs={colDefs} rowHeight={25} />

@@ -1,4 +1,4 @@
-import { Produto } from "./listaProdutos";
+import { Produto } from "@prisma/client";
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ interface ProdutoProps {
 export default function SelectStatus({ dados, setDados }: ProdutoProps) {
   return (
     <Select
-      value={dados.status}
+      value={dados.status ?? "nenhum"}
       onValueChange={(value) => setDados({ ...dados, status: value })}
     >
       <SelectTrigger className="w-[180px]">
