@@ -31,7 +31,6 @@ import InputPersonalizado from "./ui/inputPersonalizado";
 import { useClientes } from "@/app/context/todosClientesContext";
 
 interface ProdutoDialogProps extends Omit<Produto, "notaId"> {
-  cliente?: string;
   clienteId: number | null;
 }
 export default function EditaProdutoDialog({

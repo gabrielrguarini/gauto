@@ -16,16 +16,17 @@ import { useState } from "react";
 import { numericFormatter } from "react-number-format";
 import ExcluiProdutoButton from "./excluiProdutoButton";
 import EditaProdutoDialog from "@/components/EditaProdutoDialog";
-interface Produto {
-  id: number;
-  nome: string;
-  quantidade: number;
-  valorDeCompra: number;
-  valorDeVenda: number;
-  cliente: string;
-  status: string | null;
-  clienteId?: number | null | undefined;
-}
+import { Produto } from "prisma/prisma-client";
+// interface Produto {
+//   id: number;
+//   nome: string;
+//   quantidade: number;
+//   valorDeCompra: number;
+//   valorDeVenda: number;
+//   cliente: string;
+//   status: string | null;
+//   clienteId?: number | null | undefined;
+// }
 
 export default function Tabela({ produtos }: { produtos: Produto[] }) {
   const [colDefs] = useState<ColDef[]>([
@@ -72,7 +73,18 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
         }),
       initialWidth: 130,
     },
-    { field: "cliente", headerName: "Cliente", filter: true },
+    {
+      field: "cliente.nome",
+      headerName: "Cliente",
+      filter: true,
+      valueFormatter: (params: ValueFormatterParams) => {
+        return (
+          params.data.cliente?.nome ??
+          params.data.nota?.cliente?.nome ??
+          "Sem Cliente"
+        );
+      },
+    },
     { field: "status", headerName: "Status", initialWidth: 95, filter: true },
     {
       headerName: "Custo Total",
@@ -140,7 +152,7 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     {
       headerName: "Editar",
       cellRenderer: (params: CustomCellRendererProps) => (
-        console.log(params.data.status),
+        console.log(params.data.nota?.clienteId),
         (
           <EditaProdutoDialog
             id={params.data.id}
@@ -149,8 +161,7 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
             valorDeVenda={params.data.valorDeVenda}
             valorDeCompra={params.data.valorDeCompra}
             status={params.data.status}
-            clienteId={params.data.clienteId}
-            cliente={params.data.cliente}
+            clienteId={params.data.clienteId ?? params.data.nota?.clienteId}
           />
         )
       ),

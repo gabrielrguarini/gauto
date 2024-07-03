@@ -16,18 +16,7 @@ export async function BuscaProdutos() {
       },
     });
 
-    const produtosComCliente = todosProdutos.map((produto) => ({
-      id: produto.id,
-      nome: produto.nome,
-      quantidade: produto.quantidade,
-      valorDeCompra: produto.valorDeCompra,
-      valorDeVenda: produto.valorDeVenda,
-      cliente: produto.cliente?.nome || "Sem cliente",
-      status: produto.status,
-      clienteId: produto.clienteId,
-    }));
-
-    return produtosComCliente;
+    return todosProdutos;
   } catch (error) {
     console.log(error);
     throw new Error("Erro ao buscar produtos");
