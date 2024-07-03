@@ -46,7 +46,9 @@ export default function EditarNotaDialog({ id }: { id: number }) {
         ]);
         setDadosNota(dadosNotaFetch);
         setTodosClientes(clientes);
-        if (dadosNotaFetch) return setProdutos(dadosNotaFetch.produtos);
+        if (dadosNotaFetch) {
+          return setProdutos(dadosNotaFetch.produtos);
+        }
       } catch (error) {
         console.error("Failed to fetch data:", error);
       } finally {

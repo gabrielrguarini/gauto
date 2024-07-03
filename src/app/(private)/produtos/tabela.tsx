@@ -42,6 +42,9 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     {
       headerName: "Valor de Compra",
       field: "valorDeCompra",
+      valueGetter: (params) => {
+        return params.data.valorDeCompra;
+      },
       valueFormatter: (params: ValueFormatterParams) =>
         numericFormatter(`${params.data.valorDeCompra}`, {
           allowLeadingZeros: false,
@@ -55,6 +58,9 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     },
     {
       headerName: "Valor de Venda",
+      valueGetter: (params) => {
+        return params.data.valorDeVenda;
+      },
       valueFormatter: (params: ValueFormatterParams) =>
         numericFormatter(`${params.data.valorDeVenda}`, {
           allowLeadingZeros: false,
@@ -66,10 +72,13 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
         }),
       initialWidth: 130,
     },
-    { field: "cliente", headerName: "Cliente" },
-    { field: "status", headerName: "Status", initialWidth: 95 },
+    { field: "cliente", headerName: "Cliente", filter: true },
+    { field: "status", headerName: "Status", initialWidth: 95, filter: true },
     {
       headerName: "Custo Total",
+      valueGetter: (params) => {
+        return params.data.valorDeCompra * params.data.quantidade;
+      },
       valueFormatter: (params: ValueFormatterParams) =>
         numericFormatter(
           `${params.data.valorDeCompra * params.data.quantidade}`,
@@ -86,6 +95,9 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     },
     {
       headerName: "Venda Total",
+      valueGetter: (params) => {
+        return params.data.valorDeVenda * params.data.quantidade;
+      },
       valueFormatter: (params: ValueFormatterParams) =>
         numericFormatter(
           `${params.data.valorDeVenda * params.data.quantidade}`,
@@ -102,6 +114,12 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     },
     {
       headerName: "Lucro Total",
+      valueGetter: (params) => {
+        return (
+          (params.data.valorDeVenda - params.data.valorDeCompra) *
+          params.data.quantidade
+        );
+      },
       valueFormatter: (params: ValueFormatterParams) =>
         numericFormatter(
           `${
@@ -135,6 +153,7 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
         )
       ),
       width: 75,
+      filter: false,
     },
     {
       headerName: "Excluir",
@@ -145,6 +164,7 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
         />
       ),
       width: 75,
+      filter: false,
     },
   ]);
   const getRowClass = (params: RowClassParams) => {
