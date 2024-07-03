@@ -24,7 +24,8 @@ model Cliente {
   dataDeCriacao     DateTime @default(now())
   dataDeAtualizacao DateTime @default(now()) @updatedAt
 
-  notas Nota[]
+  notas    Nota[]
+  clientes Produto[]
 }
 
 model Produto {
@@ -34,6 +35,9 @@ model Produto {
   valorDeVenda  Float
   valorDeCompra Float
   status        String?
+
+  cliente   Cliente? @relation(fields: [clienteId], references: [id])
+  clienteId Int?
 
   nota   Nota? @relation(fields: [notaId], references: [id])
   notaId Int?
