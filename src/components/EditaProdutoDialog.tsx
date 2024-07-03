@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import {
   Select,
@@ -28,13 +28,11 @@ import { Produto } from "@prisma/client";
 import { SquarePen } from "lucide-react";
 import EditaProdutoId from "@/app/actions/editaProdutoId";
 import InputPersonalizado from "./ui/inputPersonalizado";
-import SelectClientes from "./ui/selectClientes";
-import { BuscaClientes } from "@/app/actions/buscaClientes";
-import { Cliente } from "@prisma/client";
+import { useClientes } from "@/app/context/todosClientesContext";
 
 interface ProdutoDialogProps extends Omit<Produto, "notaId"> {
   cliente?: string;
-  clienteId?: number;
+  clienteId: number | null;
 }
 export default function EditaProdutoDialog({
   id,
@@ -43,7 +41,6 @@ export default function EditaProdutoDialog({
   valorDeVenda,
   valorDeCompra,
   status,
-  cliente,
   clienteId,
 }: ProdutoDialogProps) {
   const initialState = {
@@ -54,7 +51,7 @@ export default function EditaProdutoDialog({
     (state: any, formData: FormData) => EditaProdutoId(formData, id),
     initialState
   );
-
+  const { clientes, isLoading, error } = useClientes();
   useEffect(() => {
     if (state.errors) {
       toast.error(state.errors, {
@@ -85,24 +82,23 @@ export default function EditaProdutoDialog({
             </DialogDescription>
           </DialogHeader>
           <form action={formAction} className="flex flex-col mt-4 gap-2">
-            <Input
-              placeholder="Carregando cliente*"
-              name="cliente"
-              defaultValue={cliente}
-              required
-            />
-            {/* <Select name="cliente">
-              <SelectTrigger className="">
-                <SelectValue placeholder="Cliente*" defaultValue={clienteId} />
-              </SelectTrigger>
-              <SelectContent>
-                {todosClientes.map((cliente) => (
-                  <SelectItem key={cliente.id} value={`${cliente.id}`}>
-                    {cliente.nome}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select> */}
+            {isLoading ? (
+              <Input placeholder="Carregando cliente*" />
+            ) : (
+              <Select name="clienteId" defaultValue={`${clienteId}`}>
+                <SelectTrigger className="">
+                  <SelectValue placeholder="Cliente*" />
+                </SelectTrigger>
+                <SelectContent>
+                  {clientes.map((cliente) => (
+                    <SelectItem key={cliente.id} value={`${cliente.id}`}>
+                      {cliente.nome}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+
             <Input
               placeholder="Carregando produto*"
               name="nome"

@@ -61,6 +61,11 @@ export async function CriaNota(
             valorDeVenda: produto.valorDeVenda,
             valorDeCompra: produto.valorDeCompra,
             status: produto.status,
+            cliente: {
+              connect: {
+                id: dataValidado.data.cliente,
+              },
+            },
           })),
         },
       },

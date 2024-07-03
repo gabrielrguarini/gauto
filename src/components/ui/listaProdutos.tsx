@@ -21,6 +21,7 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
     valorDeCompra: 0,
     status: "",
     notaId: 0,
+    clienteId: null,
   });
   if (produtos === undefined) {
     return <div>Carregando...</div>;

@@ -10,6 +10,7 @@ const CreateClienteSchema = z.object({
   valorDeVenda: z.coerce.number(),
   valorDeCompra: z.coerce.number(),
   status: z.string().nullable(),
+  clienteId: z.coerce.number().nullable(),
 });
 
 export default async function EditaProdutoId(formData: FormData, id: number) {
@@ -33,6 +34,7 @@ export default async function EditaProdutoId(formData: FormData, id: number) {
       valorDeVenda: valorDeVenda,
       valorDeCompra: valorDeCompra,
       status: formData.get("status"),
+      clienteId: formData.get("clienteId"),
     });
     if (!produtoValidado.success) {
       console.error(produtoValidado.error);
@@ -44,18 +46,43 @@ export default async function EditaProdutoId(formData: FormData, id: number) {
       },
     });
     if (produto) {
-      const updatedProduto = await prisma.produto.update({
-        where: {
-          id,
-        },
-        data: {
-          nome: produtoValidado.data.nome,
-          quantidade: produtoValidado.data.quantidade,
-          valorDeVenda: produtoValidado.data.valorDeVenda,
-          valorDeCompra: produtoValidado.data.valorDeCompra,
-          status: produtoValidado.data.status,
-        },
-      });
+      if (produto.clienteId !== produtoValidado.data.clienteId) {
+        console.log(
+          "ClienteId não é igual: ",
+          "Formulario:",
+          produtoValidado.data.clienteId,
+          "Banco de Dados: ",
+          produto.clienteId
+        );
+        const updatedProduto = await prisma.produto.update({
+          where: {
+            id,
+          },
+          data: {
+            nome: produtoValidado.data.nome,
+            quantidade: produtoValidado.data.quantidade,
+            valorDeVenda: produtoValidado.data.valorDeVenda,
+            valorDeCompra: produtoValidado.data.valorDeCompra,
+            status: produtoValidado.data.status,
+            notaId: null,
+            clienteId: produtoValidado.data.clienteId,
+          },
+        });
+      } else {
+        console.log("ClienteId é igual");
+        const updatedProduto = await prisma.produto.update({
+          where: {
+            id,
+          },
+          data: {
+            nome: produtoValidado.data.nome,
+            quantidade: produtoValidado.data.quantidade,
+            valorDeVenda: produtoValidado.data.valorDeVenda,
+            valorDeCompra: produtoValidado.data.valorDeCompra,
+            status: produtoValidado.data.status,
+          },
+        });
+      }
     }
     revalidatePath("/produtos");
     revalidatePath("/notas");

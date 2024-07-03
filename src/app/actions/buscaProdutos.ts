@@ -4,6 +4,7 @@ export async function BuscaProdutos() {
   try {
     const todosProdutos = await prisma.produto.findMany({
       include: {
+        cliente: true,
         nota: {
           include: {
             cliente: true,
@@ -21,9 +22,9 @@ export async function BuscaProdutos() {
       quantidade: produto.quantidade,
       valorDeCompra: produto.valorDeCompra,
       valorDeVenda: produto.valorDeVenda,
-      cliente: produto.nota?.cliente?.nome || "Sem cliente",
+      cliente: produto.cliente?.nome || "Sem cliente",
       status: produto.status,
-      clienteId: produto.nota?.clienteId,
+      clienteId: produto.clienteId,
     }));
 
     return produtosComCliente;
