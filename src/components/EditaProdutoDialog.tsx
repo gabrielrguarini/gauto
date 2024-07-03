@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Select,
@@ -37,9 +37,6 @@ export default function EditaProdutoDialog({
   valorDeCompra,
   status,
 }: ProdutoDialogProps) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
   const initialState = {
     erros: "",
     message: "",
@@ -49,23 +46,22 @@ export default function EditaProdutoDialog({
     initialState
   );
 
-  // useEffect(() => {
-  //   if (state.errors) {
-  //     toast.error(state.errors, {
-  //       closeButton: true,
-  //     });
-  //   }
-  //   if (state.message) {
-  //     toast(state.message, {
-  //       closeButton: true,
-  //       className: "justify-center w-64",
-  //     });
-  //     setProdutos([]);
-  //   }
-  // }, [state]);
+  useEffect(() => {
+    if (state.message) {
+      toast.error(state.errors, {
+        closeButton: true,
+      });
+    }
+    if (state.message) {
+      toast(state.message, {
+        closeButton: true,
+        className: "justify-center w-64",
+      });
+    }
+  }, [state]);
   return (
     <div className="relative">
-      <Dialog onOpenChange={setIsDialogOpen}>
+      <Dialog>
         <DialogTrigger asChild>
           <Button className="text px-1 py-0 h-6">
             <SquarePen height={12} width={12} />

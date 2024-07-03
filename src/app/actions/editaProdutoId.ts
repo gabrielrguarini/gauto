@@ -24,7 +24,7 @@ export default async function EditaProdutoId(formData: FormData, id: number) {
     });
     if (!produtoValidado.success) {
       console.error(produtoValidado.error);
-      throw new Error("Dados inválidos");
+      return { errors: "Erro ao validar dados do produto" };
     }
     const produto = await prisma.produto.findUnique({
       where: {
@@ -53,7 +53,5 @@ export default async function EditaProdutoId(formData: FormData, id: number) {
   } catch (error) {
     console.log(error);
     throw new Error("Erro ao buscar clientes");
-  } finally {
-    await prisma.$disconnect();
   }
 }
