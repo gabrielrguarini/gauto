@@ -27,7 +27,7 @@ import {
 import SubmitButton from "./ui/submitButton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
-import { Produto } from "@prisma/client";
+import { Cliente, Produto } from "@prisma/client";
 
 export interface todosClientesInterface {
   id: number;
@@ -41,8 +41,7 @@ export interface todosClientesInterface {
 
 export default function CriarNotaDialog() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [todosClientes, setTodosClientes] =
-    useState<todosClientesInterface[]>();
+  const [todosClientes, setTodosClientes] = useState<Cliente[]>();
 
   useEffect(() => {
     async function fetchClientes() {

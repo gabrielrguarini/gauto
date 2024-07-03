@@ -20,6 +20,7 @@ import InputPersonalizado from "./ui/inputPersonalizado";
 import EditaCliente from "@/app/actions/editaCliente";
 import { useFormState } from "react-dom";
 import { set } from "zod";
+import { toast } from "sonner";
 
 export default function EditaClienteDialog({ id }: { id: number }) {
   const [cliente, setCliente] = useState<Cliente>({
@@ -51,6 +52,20 @@ export default function EditaClienteDialog({ id }: { id: number }) {
     (state: any, formData: FormData) => EditaCliente(formData, cliente.id),
     initialState
   );
+  useEffect(() => {
+    if (state.errors) {
+      toast.error(state.errors, {
+        closeButton: true,
+        className: "justify-center w-64 bottom-0 right-0",
+      });
+    }
+    if (state.message) {
+      toast(state.message, {
+        closeButton: true,
+        className: "justify-center w-64 bottom-0 right-0",
+      });
+    }
+  }, [state]);
   return (
     <>
       <Dialog onOpenChange={setIsDialogOpen}>

@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   Select,
@@ -28,8 +28,14 @@ import { Produto } from "@prisma/client";
 import { SquarePen } from "lucide-react";
 import EditaProdutoId from "@/app/actions/editaProdutoId";
 import InputPersonalizado from "./ui/inputPersonalizado";
+import SelectClientes from "./ui/selectClientes";
+import { BuscaClientes } from "@/app/actions/buscaClientes";
+import { Cliente } from "@prisma/client";
 
-type ProdutoDialogProps = Omit<Produto, "notaId">;
+interface ProdutoDialogProps extends Omit<Produto, "notaId"> {
+  cliente?: string;
+  clienteId?: number;
+}
 export default function EditaProdutoDialog({
   id,
   nome,
@@ -37,6 +43,8 @@ export default function EditaProdutoDialog({
   valorDeVenda,
   valorDeCompra,
   status,
+  cliente,
+  clienteId,
 }: ProdutoDialogProps) {
   const initialState = {
     erros: "",
@@ -77,6 +85,24 @@ export default function EditaProdutoDialog({
             </DialogDescription>
           </DialogHeader>
           <form action={formAction} className="flex flex-col mt-4 gap-2">
+            <Input
+              placeholder="Carregando cliente*"
+              name="cliente"
+              defaultValue={cliente}
+              required
+            />
+            {/* <Select name="cliente">
+              <SelectTrigger className="">
+                <SelectValue placeholder="Cliente*" defaultValue={clienteId} />
+              </SelectTrigger>
+              <SelectContent>
+                {todosClientes.map((cliente) => (
+                  <SelectItem key={cliente.id} value={`${cliente.id}`}>
+                    {cliente.nome}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select> */}
             <Input
               placeholder="Carregando produto*"
               name="nome"

@@ -71,20 +71,20 @@ export default function EditarNotaDialog({ id }: { id: number }) {
     initialState
   );
 
-  // useEffect(() => {
-  //   if (state.errors) {
-  //     toast.error(state.errors, {
-  //       closeButton: true,
-  //     });
-  //   }
-  //   if (state.message) {
-  //     toast(state.message, {
-  //       closeButton: true,
-  //       className: "justify-center w-64",
-  //     });
-  //     setProdutos([]);
-  //   }
-  // }, [state]);
+  useEffect(() => {
+    if (state.errors) {
+      toast.error(state.errors, {
+        closeButton: true,
+      });
+    }
+    if (state.message) {
+      toast(state.message, {
+        closeButton: true,
+        className: "justify-center w-64",
+      });
+      setProdutos([]);
+    }
+  }, [state]);
   return (
     <div className="relative">
       <Dialog onOpenChange={setIsDialogOpen}>

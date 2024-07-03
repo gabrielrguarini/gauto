@@ -93,7 +93,7 @@ export default function ListaProdutos({ produtos, setProdutos }: ProdutoProps) {
                     onValueChange={(values) =>
                       handleChange(
                         produto.id,
-                        "valorDeCompra",
+                        "valorDeVenda",
                         values.value ? values.value : 0
                       )
                     }

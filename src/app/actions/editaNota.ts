@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import prisma from "@/lib/prisma";
+import { stringify } from "querystring";
 
 const CriaNotaSchema = z.object({
   produtos: z.array(
@@ -34,9 +35,8 @@ export async function EditaNota(
       produtos,
     });
     if (!dataValidado.success) {
-      console.log(dataValidado.error.flatten().fieldErrors);
       return {
-        errors: "Formulário inválido",
+        errors: stringify(dataValidado.error.flatten().fieldErrors),
       };
     }
     const cliente = await prisma.cliente.findUnique({
@@ -44,9 +44,8 @@ export async function EditaNota(
     });
 
     if (!cliente) {
-      console.log("Cliente não encontrado ao editar nota");
       return {
-        errors: "Cliente não encontrado",
+        errors: "Cliente não encontrado ao editar nota.",
       };
     }
 
@@ -56,7 +55,6 @@ export async function EditaNota(
     });
 
     if (!existeNota) {
-      console.log("Nota não encontrada ao editar");
       return {
         errors: "Nota não encontrada",
       };

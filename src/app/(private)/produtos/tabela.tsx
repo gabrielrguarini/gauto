@@ -149,6 +149,8 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
             valorDeVenda={params.data.valorDeVenda}
             valorDeCompra={params.data.valorDeCompra}
             status={params.data.status}
+            clienteId={params.data.clienteId}
+            cliente={params.data.cliente}
           />
         )
       ),
