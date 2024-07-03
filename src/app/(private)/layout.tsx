@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import Navbar from "@/components/navbar";
 import { redirect } from "next/navigation";
-
+import Clientes from "./clientes/page";
+import { ClientesProvider } from "../context/todosClientesContext";
 export default async function PrivateLayout({
   children,
 }: {
@@ -14,7 +15,7 @@ export default async function PrivateLayout({
   return (
     <main className="flex">
       <Navbar />
-      {children}
+      <ClientesProvider>{children}</ClientesProvider>
     </main>
   );
 }
