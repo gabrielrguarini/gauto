@@ -13,13 +13,25 @@ const CreateClienteSchema = z.object({
 });
 
 export default async function EditaProdutoId(formData: FormData, id: number) {
+  const valorDeCompra = formData
+    .get("valorDeCompra")
+    ?.toString()
+    .replace("R$ ", "")
+    .replace(".", "")
+    .replace(",", ".");
+  const valorDeVenda = formData
+    .get("valorDeVenda")
+    ?.toString()
+    .replace("R$ ", "")
+    .replace(".", "")
+    .replace(",", ".");
   try {
     const produtoValidado = CreateClienteSchema.safeParse({
       id,
       nome: formData.get("nome"),
       quantidade: formData.get("quantidade"),
-      valorDeVenda: formData.get("valorDeVenda"),
-      valorDeCompra: formData.get("valorDeCompra"),
+      valorDeVenda: valorDeVenda,
+      valorDeCompra: valorDeCompra,
       status: formData.get("status"),
     });
     if (!produtoValidado.success) {

@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import { Produto } from "@prisma/client";
 import { SquarePen } from "lucide-react";
 import EditaProdutoId from "@/app/actions/editaProdutoId";
+import InputPersonalizado from "./ui/inputPersonalizado";
 
 type ProdutoDialogProps = Omit<Produto, "notaId">;
 export default function EditaProdutoDialog({
@@ -47,15 +48,16 @@ export default function EditaProdutoDialog({
   );
 
   useEffect(() => {
-    if (state.message) {
+    if (state.errors) {
       toast.error(state.errors, {
         closeButton: true,
+        className: "justify-center w-64 bottom-0 right-0",
       });
     }
     if (state.message) {
       toast(state.message, {
         closeButton: true,
-        className: "justify-center w-64",
+        className: "justify-center w-64 bottom-0 right-0",
       });
     }
   }, [state]);
@@ -87,17 +89,21 @@ export default function EditaProdutoDialog({
               defaultValue={quantidade}
               required
             />
-            <Input
-              placeholder="Carregando valor de venda*"
+            <InputPersonalizado
               name="valorDeVenda"
-              defaultValue={valorDeVenda}
-              required
+              moeda
+              type="text"
+              placeholder="Carregando valor de venda*"
+              value={valorDeVenda}
+              onValueChange={(values) => values.floatValue}
             />
-            <Input
-              placeholder="Carregando valor de compra*"
+            <InputPersonalizado
               name="valorDeCompra"
-              defaultValue={valorDeCompra}
-              required
+              moeda
+              placeholder="Carregando valor de compra*"
+              type="text"
+              value={valorDeCompra}
+              onValueChange={(values) => values.floatValue}
             />
             <Select name="status" defaultValue={status ?? "nenhum"}>
               <SelectTrigger className="w-[180px]">
