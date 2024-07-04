@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import { CriaNota } from "@/app/actions/criaNota";
 import ListaProdutos from "./ui/listaProdutos";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
   Select,
@@ -39,7 +39,7 @@ export interface todosClientesInterface {
   dataDeAtualizacao?: Date;
 }
 
-export default function CriarNotaDialog() {
+function CriarNotaDialog() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
 
@@ -129,3 +129,4 @@ export default function CriarNotaDialog() {
     </div>
   );
 }
+export default memo(CriarNotaDialog);

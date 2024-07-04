@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ListaProdutos from "./ui/listaProdutos";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
   Select,
@@ -30,7 +30,7 @@ import buscaNotaId, { BuscaNotaIdType } from "@/app/actions/buscaNotaId";
 import { EditaNota } from "@/app/actions/editaNota";
 import { SquarePen } from "lucide-react";
 
-export default function EditarNotaDialog({ id }: { id: number }) {
+function EditarNotaDialog({ id }: { id: number }) {
   const [todosClientes, setTodosClientes] = useState<Cliente[]>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -147,3 +147,4 @@ export default function EditarNotaDialog({ id }: { id: number }) {
     </div>
   );
 }
+export default memo(EditarNotaDialog);

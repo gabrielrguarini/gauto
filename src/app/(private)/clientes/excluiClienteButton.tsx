@@ -1,10 +1,10 @@
 "use client";
-import excluiClienteId from "@/app/actions/excluiClienteId";
 import { useFormState } from "react-dom";
 import ExcluiClienteId from "@/app/actions/excluiClienteId";
 import { Trash2Icon } from "lucide-react";
 import SubmitButton from "@/components/ui/submitButton";
-export default function ExcluiClienteButton({
+import { memo } from "react";
+function ExcluiClienteButton({
   id,
   className,
   ...props
@@ -25,3 +25,4 @@ export default function ExcluiClienteButton({
     </form>
   );
 }
+export default memo(ExcluiClienteButton);

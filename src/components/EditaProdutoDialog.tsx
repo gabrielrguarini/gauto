@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 
 import {
   Select,
@@ -33,7 +33,7 @@ import { useClientes } from "@/app/context/todosClientesContext";
 interface ProdutoDialogProps extends Omit<Produto, "notaId"> {
   clienteId: number | null;
 }
-export default function EditaProdutoDialog({
+function EditaProdutoDialog({
   id,
   nome,
   quantidade,
@@ -155,3 +155,4 @@ export default function EditaProdutoDialog({
     </div>
   );
 }
+export default memo(EditaProdutoDialog);

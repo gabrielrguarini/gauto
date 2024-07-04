@@ -13,16 +13,14 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import SubmitButton from "./ui/submitButton";
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import buscaClienteId from "@/app/actions/buscaClienteId";
 import { Cliente } from "@prisma/client";
 import InputPersonalizado from "./ui/inputPersonalizado";
 import EditaCliente from "@/app/actions/editaCliente";
 import { useFormState } from "react-dom";
-import { set } from "zod";
 import { toast } from "sonner";
-
-export default function EditaClienteDialog({ id }: { id: number }) {
+function EditaClienteDialog({ id }: { id: number }) {
   const [cliente, setCliente] = useState<Cliente>({
     id: 0,
     nome: "",
@@ -136,3 +134,5 @@ export default function EditaClienteDialog({ id }: { id: number }) {
     </>
   );
 }
+
+export default memo(EditaClienteDialog);

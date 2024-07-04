@@ -17,12 +17,13 @@ import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import SubmitButton from "./ui/submitButton";
 import InputPersonalizado from "./ui/inputPersonalizado";
+import { memo } from "react";
 
 const initialState = {
   message: "",
 };
 
-export default function CriarClienteDialog() {
+function CriarClienteDialog() {
   const [state, formAction] = useFormState(criaCliente, initialState);
 
   if (state?.errors) {
@@ -71,3 +72,4 @@ export default function CriarClienteDialog() {
     </div>
   );
 }
+export default memo(CriarClienteDialog);

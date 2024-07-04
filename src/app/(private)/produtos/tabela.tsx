@@ -12,7 +12,7 @@ import {
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-import { useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { numericFormatter } from "react-number-format";
 import ExcluiProdutoButton from "./excluiProdutoButton";
 import EditaProdutoDialog from "@/components/EditaProdutoDialog";
@@ -152,18 +152,15 @@ export default function Tabela({ produtos }: { produtos: Produto[] }) {
     {
       headerName: "Editar",
       cellRenderer: (params: CustomCellRendererProps) => (
-        console.log(params.data.nota?.clienteId),
-        (
-          <EditaProdutoDialog
-            id={params.data.id}
-            nome={params.data.nome}
-            quantidade={params.data.quantidade}
-            valorDeVenda={params.data.valorDeVenda}
-            valorDeCompra={params.data.valorDeCompra}
-            status={params.data.status}
-            clienteId={params.data.clienteId ?? params.data.nota?.clienteId}
-          />
-        )
+        <EditaProdutoDialog
+          id={params.data.id}
+          nome={params.data.nome}
+          quantidade={params.data.quantidade}
+          valorDeVenda={params.data.valorDeVenda}
+          valorDeCompra={params.data.valorDeCompra}
+          status={params.data.status}
+          clienteId={params.data.clienteId ?? params.data.nota?.clienteId}
+        />
       ),
       width: 75,
       filter: false,
