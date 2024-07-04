@@ -3,7 +3,8 @@ import { useFormState } from "react-dom";
 import { Trash2Icon } from "lucide-react";
 import ExcluiProdutoId from "@/app/actions/excluiProdutoId";
 import SubmitButton from "@/components/ui/submitButton";
-export default function ExcluiProdutoButton({
+import { memo } from "react";
+function ExcluiProdutoButton({
   id,
   className,
   ...props
@@ -24,3 +25,4 @@ export default function ExcluiProdutoButton({
     </form>
   );
 }
+export default memo(ExcluiProdutoButton);

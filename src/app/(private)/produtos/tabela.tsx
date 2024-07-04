@@ -12,21 +12,11 @@ import {
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
-import { memo, useMemo, useState } from "react";
+import { useState } from "react";
 import { numericFormatter } from "react-number-format";
 import ExcluiProdutoButton from "./excluiProdutoButton";
 import EditaProdutoDialog from "@/components/EditaProdutoDialog";
-import { Produto } from "prisma/prisma-client";
-// interface Produto {
-//   id: number;
-//   nome: string;
-//   quantidade: number;
-//   valorDeCompra: number;
-//   valorDeVenda: number;
-//   cliente: string;
-//   status: string | null;
-//   clienteId?: number | null | undefined;
-// }
+import { Produto } from "@prisma/client";
 
 export default function Tabela({ produtos }: { produtos: Produto[] }) {
   const [colDefs] = useState<ColDef[]>([

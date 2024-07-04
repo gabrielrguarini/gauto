@@ -107,7 +107,7 @@ function EditarNotaDialog({ id }: { id: number }) {
               defaultValue={dadosNota?.numero}
               required
             />
-            <Select name="cliente">
+            <Select name="cliente" value={dadosNota?.cliente?.id.toString()}>
               <SelectTrigger>
                 <SelectValue placeholder="Cliente*" />
               </SelectTrigger>
