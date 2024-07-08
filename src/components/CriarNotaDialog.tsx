@@ -28,6 +28,7 @@ import SubmitButton from "./ui/submitButton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { Cliente, Produto } from "@prisma/client";
+import actionFile from "@/app/testes/actionFile";
 
 export interface todosClientesInterface {
   id: number;
@@ -56,24 +57,24 @@ function CriarNotaDialog() {
     produtos: [],
   };
   const [state, formAction] = useFormState(
-    (state: any, formData: FormData) => CriaNota(state, formData, produtos),
+    (state: any, formData: FormData) => actionFile(state, formData, produtos),
     initialState
   );
 
-  useEffect(() => {
-    if (state.errors) {
-      toast.error(state.errors, {
-        closeButton: true,
-      });
-    }
-    if (state.message) {
-      toast(state.message, {
-        closeButton: true,
-        className: "justify-center w-64",
-      });
-      setProdutos([]);
-    }
-  }, [state]);
+  // useEffect(() => {
+  //   if (state.errors) {
+  //     toast.error(state.errors, {
+  //       closeButton: true,
+  //     });
+  //   }
+  //   if (state.message) {
+  //     toast(state.message, {
+  //       closeButton: true,
+  //       className: "justify-center w-64",
+  //     });
+  //     setProdutos([]);
+  //   }
+  // }, [state]);
   if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
@@ -102,6 +103,11 @@ function CriarNotaDialog() {
                 ))}
               </SelectContent>
             </Select>
+            <Input
+              className="border-2 border-slate-600"
+              type="file"
+              name="arquivo"
+            />
             <ListaProdutos produtos={produtos} setProdutos={setProdutos} />
             <DialogFooter className="self-end">
               <Button

@@ -1,25 +1,26 @@
 "use server";
 
-export default async function actionFile(formdata: FormData) {
-  const file = formdata.get("arquivo");
-  if (file) {
-    try {
-      const response = await fetch("http://localhost:3000/api/upload", {
-        method: "POST",
-        body: formdata,
-      });
+import { Produto } from "@prisma/client";
 
-      if (!response.ok) {
-        throw new Error(
-          `Erro ao enviar arquivo no action: ${response.statusText}`
-        );
-      }
+export default async function actionFile(
+  prevState: any,
+  formData: FormData,
+  produtos: Produto[]
+) {
+  try {
+    formData.append("produtos", JSON.stringify(produtos));
+    const response = await fetch("http://localhost:3000/api/nota", {
+      method: "POST",
+      body: formData,
+    });
 
-      console.log("Arquivo enviado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao enviar arquivo no fetch:", error);
+    if (!response.ok) {
+      throw new Error(
+        `Erro ao fazer fetch em /api/nota: ${response.statusText}`
+      );
     }
-  } else {
-    console.error("Nenhum arquivo encontrado para enviar.");
+    return prevState;
+  } catch (error) {
+    console.error("Erro ao fazer fetch em /api/nota:", error);
   }
 }
