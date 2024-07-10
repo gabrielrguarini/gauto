@@ -12,7 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import criaCliente from "@/app/actions/criaCliente";
+import {criaCliente} from "@/app/actions/cliente";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import SubmitButton from "./ui/submitButton";
