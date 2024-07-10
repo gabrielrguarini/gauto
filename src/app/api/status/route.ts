@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
         id: 1,
       },
     });
-    if (users !== null) {
+    if (users === null) {
       return NextResponse.json({
         updated_at: new Date().toISOString(),
         connection_status: "offline",

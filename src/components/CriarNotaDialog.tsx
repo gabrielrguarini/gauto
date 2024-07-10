@@ -61,20 +61,20 @@ function CriarNotaDialog() {
     initialState
   );
 
-  // useEffect(() => {
-  //   if (state.errors) {
-  //     toast.error(state.errors, {
-  //       closeButton: true,
-  //     });
-  //   }
-  //   if (state.message) {
-  //     toast(state.message, {
-  //       closeButton: true,
-  //       className: "justify-center w-64",
-  //     });
-  //     setProdutos([]);
-  //   }
-  // }, [state]);
+  useEffect(() => {
+    if (state.errors) {
+      toast.error(state.errors, {
+        closeButton: true,
+      });
+    }
+    if (state.message) {
+      toast(state.message, {
+        closeButton: true,
+        className: "justify-center w-64",
+      });
+      setProdutos([]);
+    }
+  }, [state]);
   if (!todosClientes) return <Button disabled>Carregando...</Button>;
   return (
     <div className="relative">
@@ -89,7 +89,11 @@ function CriarNotaDialog() {
               Preencha os dados para criar uma nova nota.
             </DialogDescription>
           </DialogHeader>
-          <form action={formAction} className="flex flex-col mt-4 gap-2">
+          <form
+            action={formAction}
+            className="flex flex-col mt-4 gap-2"
+            encType="multipart/form-data"
+          >
             <Input placeholder="Numero*" name="numero" required />
             <Select name="cliente">
               <SelectTrigger>
@@ -107,6 +111,7 @@ function CriarNotaDialog() {
               className="border-2 border-slate-600"
               type="file"
               name="arquivo"
+              multiple
             />
             <ListaProdutos produtos={produtos} setProdutos={setProdutos} />
             <DialogFooter className="self-end">

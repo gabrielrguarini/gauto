@@ -44,12 +44,12 @@ model Produto {
 }
 
 model Nota {
-  id         Int       @id @default(autoincrement())
-  numero     Int
-  produtos   Produto[]
-  cliente    Cliente?  @relation(fields: [clienteId], references: [id])
-  clienteId  Int?
-  arquivoURL String?
+  id           Int       @id @default(autoincrement())
+  numero       Int
+  produtos     Produto[]
+  cliente      Cliente?  @relation(fields: [clienteId], references: [id])
+  clienteId    Int?
+  arquivosURLs String[]
 
   dataDeCriacao     DateTime @default(now())
   dataDeAtualizacao DateTime @default(now()) @updatedAt
