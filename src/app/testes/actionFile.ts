@@ -11,6 +11,11 @@ export default async function actionFile(
     if (produtos) {
       formData.append("produtos", JSON.stringify(produtos));
     }
+    const file = formData.get("arquivo") as File;
+
+    if (file.size === 0) {
+      formData.delete("arquivo");
+    }
     const response = await fetch("http://localhost:3000/api/nota", {
       method: "POST",
       body: formData,

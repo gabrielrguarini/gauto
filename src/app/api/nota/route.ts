@@ -108,7 +108,6 @@ export async function POST(request: NextRequest) {
 
     revalidatePath("/notas");
     revalidatePath("/produtos");
-
     return NextResponse.json(
       { message: "Nota criada com sucesso" },
       { status: 201 }
