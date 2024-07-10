@@ -12,10 +12,8 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { CriaNota } from "@/app/actions/criaNota";
 import ListaProdutos from "./ui/listaProdutos";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { BuscaClientes } from "@/app/actions/buscaClientes";
 import {
   Select,
@@ -28,7 +26,7 @@ import SubmitButton from "./ui/submitButton";
 import { useFormState } from "react-dom";
 import { toast } from "sonner";
 import { Cliente, Produto } from "@prisma/client";
-import actionFile from "@/app/testes/actionFile";
+import { criaNota } from "@/app/actions/nota";
 
 export interface todosClientesInterface {
   id: number;
@@ -57,7 +55,7 @@ function CriarNotaDialog() {
     produtos: [],
   };
   const [state, formAction] = useFormState(
-    (state: any, formData: FormData) => actionFile(state, formData, produtos),
+    (state: any, formData: FormData) => criaNota(state, formData, produtos),
     initialState
   );
 

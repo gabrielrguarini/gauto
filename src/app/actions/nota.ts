@@ -2,7 +2,7 @@
 
 import { Produto } from "@prisma/client";
 
-export default async function actionFile(
+export async function criaNota(
   prevState: any,
   formData: FormData,
   produtos?: Produto[]
@@ -12,7 +12,6 @@ export default async function actionFile(
       formData.append("produtos", JSON.stringify(produtos));
     }
     const file = formData.get("arquivo") as File;
-
     if (file.size === 0) {
       formData.delete("arquivo");
     }
@@ -20,7 +19,6 @@ export default async function actionFile(
       method: "POST",
       body: formData,
     });
-
     if (!response.ok) {
       throw new Error(
         `Erro ao fazer fetch em /api/nota: ${response.statusText}`
